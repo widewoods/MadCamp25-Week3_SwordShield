@@ -9,11 +9,16 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private Rigidbody2D playerRb;
   [SerializeField] private float baseSpeed = 5f;
   private float moveSpeed;
+  [SerializeField] private float acceleration = 50f;
+  [SerializeField] private float deceleration = 70f;
+  [SerializeField] private float turnAcceleration = 100f;
   [SerializeField] private int playerID;
 
   private Vector2 input;
   private Vector2 externalVelocity;
   private float movementOverrideTimer = 0f;
+
+  Vector2 velocity;
 
   public Vector2 Position => playerRb.position;
 
@@ -35,7 +40,7 @@ public class PlayerController : MonoBehaviour
   }
   void FixedUpdate()
   {
-    if(movementOverrideTimer > 0f)
+    if (movementOverrideTimer > 0f)
     {
       movementOverrideTimer -= Time.fixedDeltaTime;
       if (movementOverrideTimer <= 0f)
@@ -43,11 +48,26 @@ public class PlayerController : MonoBehaviour
         moveSpeed = baseSpeed;
       }
     }
-    
-    Vector2 vInput = input * moveSpeed;
-    Vector2 finalVelocity = vInput + externalVelocity;
 
-    playerRb.MovePosition(Position + finalVelocity * Time.fixedDeltaTime);
+    if (input.sqrMagnitude == 0f && velocity.magnitude < 0.03f)
+      velocity = Vector2.zero;
+
+    Vector2 desiredVelocity = input * moveSpeed;
+    float a = (input.sqrMagnitude > 0f) ? acceleration : deceleration;
+
+    if (velocity.sqrMagnitude > 0.001f && input.sqrMagnitude > 0f)
+    {
+      float align = Vector2.Dot(velocity.normalized, desiredVelocity.normalized);
+      if (align < 0f) a = turnAcceleration;
+    }
+
+    Vector2 dv = desiredVelocity - velocity;
+    float maxDv = a * Time.fixedDeltaTime;
+    if (dv.sqrMagnitude > maxDv * maxDv) dv = dv.normalized * maxDv;
+    velocity += dv;
+    Vector2 finalVelocity = velocity + externalVelocity;
+
+    playerRb.MovePosition(playerRb.position + finalVelocity * Time.fixedDeltaTime);
   }
 
   public void AddExternalVelocity(Vector2 velocity)

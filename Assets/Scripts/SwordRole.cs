@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class PullAbility : MonoBehaviour
+public class SwordRole : MonoBehaviour
 {
   private enum PullState { Idle, StartUp, Pulling }
 
 
+  [Header("References")]
   [SerializeField] private Rigidbody2D swordRb;
   [SerializeField] private PlayerController swordPlayerController;
+  [SerializeField] private PlayerController shieldPlayerController;
+  [SerializeField] private ShowSlashTrail slashTrail;
 
   [Header("Pull")]
   [SerializeField] private float maxPullStrength = 5f;
@@ -23,14 +25,13 @@ public class PullAbility : MonoBehaviour
 
   private float pullTimer = 0f;
   private float startUpTimer = 0f;
-  private float SPRITE_ROTATION_OFFSET = 135f;
+  private float SPRITE_ROTATION_OFFSET = -90f;
 
-  void Update()
+  void Start()
   {
-    if (Input.GetKeyDown(KeyCode.Space))
-    {
-      StartPull();
-    }
+    swordRb = GetComponent<Rigidbody2D>();
+    swordPlayerController = GetComponent<PlayerController>();
+    slashTrail = GetComponentInChildren<ShowSlashTrail>();
   }
 
   void FixedUpdate()
@@ -39,9 +40,13 @@ public class PullAbility : MonoBehaviour
     {
       Pull();
     }
+    else
+    {
+      FaceDown();
+    }
   }
 
-  private void StartPull()
+  public void StartPull()
   {
     if (currentState == PullState.Idle)
     {
@@ -58,8 +63,8 @@ public class PullAbility : MonoBehaviour
 
   private void Pull()
   {
-    Vector2 targetPos = swordPlayerController.Position;
-    Vector2 playerPos = (Vector2)transform.position;
+    Vector2 targetPos = shieldPlayerController.Position;
+    Vector2 playerPos = swordPlayerController.Position;
     Vector2 toTarget = targetPos - playerPos;
     Vector2 pullDirection = toTarget.normalized;
     float distance = toTarget.magnitude;
@@ -68,6 +73,7 @@ public class PullAbility : MonoBehaviour
     {
       currentState = PullState.Idle;
       swordPlayerController.SetExternalVelocity(Vector2.zero);
+      slashTrail.EndTrail();
       return;
     }
 
@@ -76,6 +82,7 @@ public class PullAbility : MonoBehaviour
       startUpTimer += Time.fixedDeltaTime;
       if (startUpTimer >= startUpDuration)
       {
+        slashTrail.StartTrail();
         currentState = PullState.Pulling;
       }
       FaceShield();
@@ -87,15 +94,23 @@ public class PullAbility : MonoBehaviour
       pullTimer += Time.fixedDeltaTime;
       FaceShield();
       float u = Mathf.Min(1, pullTimer / accelerationTime);
-      swordPlayerController.SetExternalVelocity(-pullDirection * maxPullStrength * accelerationCurve.Evaluate(u));
+      swordPlayerController.SetExternalVelocity(pullDirection * maxPullStrength * accelerationCurve.Evaluate(u));
     }
   }
 
   private void FaceShield()
   {
-    Vector2 toShield = swordPlayerController.Position - (Vector2)transform.position;
+    Vector2 toShield = swordPlayerController.Position - shieldPlayerController.Position;
 
     float targetDeg = Mathf.Atan2(toShield.y, toShield.x) * Mathf.Rad2Deg + SPRITE_ROTATION_OFFSET;
+    float newDeg = Mathf.MoveTowardsAngle(swordRb.rotation, targetDeg, 360f * Time.fixedDeltaTime);
+    swordRb.MoveRotation(newDeg);
+  }
+
+  private void FaceDown()
+  {
+    Vector2 down = Vector2.down;
+    float targetDeg = Mathf.Atan2(down.y, down.x) * Mathf.Rad2Deg + 90f;
     float newDeg = Mathf.MoveTowardsAngle(swordRb.rotation, targetDeg, 360f * Time.fixedDeltaTime);
     swordRb.MoveRotation(newDeg);
   }
