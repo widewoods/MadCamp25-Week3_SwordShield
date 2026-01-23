@@ -5,40 +5,68 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-  [SerializeField]
-  private Rigidbody2D playerRb;
-  public float moveSpeed = 5f;
 
-  [SerializeField]
-  private int playerID;
+  [SerializeField] private Rigidbody2D playerRb;
+  [SerializeField] private float baseSpeed = 5f;
+  private float moveSpeed;
+  [SerializeField] private int playerID;
 
-  // Start is called before the first frame update
+  private Vector2 input;
+  private Vector2 externalVelocity;
+  private float movementOverrideTimer = 0f;
+
+  public Vector2 Position => playerRb.position;
+
   void Start()
   {
-
+    moveSpeed = baseSpeed;
   }
 
-  // Update is called once per frame
   void Update()
-  {
-
-  }
-
-  void FixedUpdate()
   {
     if (playerID == 1)
     {
-      Vector2 input = GetWASDMovement();
-      playerRb.MovePosition(playerRb.position + input * moveSpeed * Time.fixedDeltaTime);
+      input = GetWASDMovement();
     }
     else if (playerID == 2)
     {
-      Vector2 input = GetArrowMovement();
-      playerRb.MovePosition(playerRb.position + input * moveSpeed * Time.fixedDeltaTime);
+      input = GetArrowMovement();
     }
   }
+  void FixedUpdate()
+  {
+    if(movementOverrideTimer > 0f)
+    {
+      movementOverrideTimer -= Time.fixedDeltaTime;
+      if (movementOverrideTimer <= 0f)
+      {
+        moveSpeed = baseSpeed;
+      }
+    }
+    
+    Vector2 vInput = input * moveSpeed;
+    Vector2 finalVelocity = vInput + externalVelocity;
 
-  Vector2 GetWASDMovement()
+    playerRb.MovePosition(Position + finalVelocity * Time.fixedDeltaTime);
+  }
+
+  public void AddExternalVelocity(Vector2 velocity)
+  {
+    externalVelocity += velocity;
+  }
+
+  public void SetExternalVelocity(Vector2 velocity)
+  {
+    externalVelocity = velocity;
+  }
+
+  public void SetMovementOverride(float speedFactor, float duration)
+  {
+    moveSpeed *= speedFactor;
+    movementOverrideTimer = duration;
+  }
+
+  private Vector2 GetWASDMovement()
   {
     Vector2 input = Vector2.zero;
     if (Input.GetKey(KeyCode.W))
@@ -60,7 +88,7 @@ public class PlayerController : MonoBehaviour
     return input.normalized;
   }
 
-  Vector2 GetArrowMovement()
+  private Vector2 GetArrowMovement()
   {
     Vector2 input = Vector2.zero;
     if (Input.GetKey(KeyCode.UpArrow))
