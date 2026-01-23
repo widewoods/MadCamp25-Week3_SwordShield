@@ -8,16 +8,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Enemy
+  - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - BulletEnemy
+  - BulletPlayer
+  - Ground
+  - Walls
+  - WaterBolck
   - 
   - 
   - 
@@ -40,4 +40,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 3926804731
+    locked: 0
+  - name: Wall
+    uniqueID: 769306601
+    locked: 0
+  - name: WaterBlock
+    uniqueID: 2606607357
+    locked: 0
+  - name: Enemy
+    uniqueID: 2752640859
+    locked: 0
+  - name: Player
+    uniqueID: 3301206889
+    locked: 0
+  - name: Bullets
+    uniqueID: 228695181
+    locked: 0
+  - name: VFX
+    uniqueID: 3289810637
+    locked: 0
+  - name: UI
+    uniqueID: 2099604973
     locked: 0
