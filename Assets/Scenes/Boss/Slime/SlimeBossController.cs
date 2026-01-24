@@ -77,12 +77,10 @@ public class SlimeBossController : MonoBehaviour
     }
 
     void NextAttack(){
-        /*
+        
         float r = Random.value;
         if(r < 0.6f) StartJumpShot();
         else StartBigJump();
-        */
-        StartJumpShot();
     }
 
     void ChangeState(BossState st, bool busy){
@@ -99,7 +97,7 @@ public class SlimeBossController : MonoBehaviour
 
     void StartBigJump(){
         ChangeState(BossState.Attack, true);
-        bigJump.Execute(players, OnAttackFinished);
+        bigJump.Execute(OnAttackFinished);
     }
 
     void StartSplit(){

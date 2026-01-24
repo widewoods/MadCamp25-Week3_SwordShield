@@ -8,19 +8,12 @@ public class SlimeAttack_JumpShot : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
 
-    [Header("Jump")]
-    [SerializeField] private float jumpVelocity = 8f;
-    [SerializeField] private float postLandDelay = 0.3f;
-
     [Header("Shoot")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private int bulletCount = 12;
     [SerializeField] private float bulletSpeed = 7f;
+    [SerializeField] private float spreadLen = 2f;
 
-    [Header("Ground Check")]
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRadius = 0.08f;
 
     private bool isRunning = false;
 
@@ -40,20 +33,10 @@ public class SlimeAttack_JumpShot : MonoBehaviour
     {
         isRunning = true;
 
-        // 1️⃣ 점프
-        animator?.SetTrigger("Jump");
-        rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
-
-        // 2️⃣ 착지 대기
-        yield return new WaitUntil(IsGrounded);
-
-        // 3️⃣ 착지 연출 + 탄막 발사
-        animator?.SetTrigger("Land");
+        Debug.Log("jumpshot-routine");
+        yield return new WaitForSeconds(1f);
         ShootRadial();
-
-        // 4️⃣ 착지 후 딜레이
-        yield return new WaitForSeconds(postLandDelay);
-
+        
         isRunning = false;
         onFinished?.Invoke();
     }
@@ -73,7 +56,8 @@ public class SlimeAttack_JumpShot : MonoBehaviour
                 Mathf.Sin(angle * Mathf.Deg2Rad)
             ).normalized;
 
-            GameObject b = Instantiate(bulletPrefab, origin, Quaternion.identity);
+            Vector2 init_pos = origin + dir * spreadLen;
+            GameObject b = Instantiate(bulletPrefab, init_pos, Quaternion.identity);
 
             if (b.TryGetComponent<SimpleBullet2D>(out var bullet))
             {
@@ -87,21 +71,4 @@ public class SlimeAttack_JumpShot : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
-    {
-        if (groundCheck == null)
-            return rb.velocity.y <= 0.01f;
-
-        return Physics2D.OverlapCircle(
-            groundCheck.position,
-            groundCheckRadius,
-            groundMask
-        ) != null;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (groundCheck == null) return;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    }
 }
