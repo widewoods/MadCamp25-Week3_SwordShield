@@ -8,6 +8,7 @@ public class SpawnMinion : MonoBehaviour
 
   public void Spawn(Vector3 spawnPosition)
   {
-    Instantiate(minionPrefab, spawnPosition, Quaternion.identity);
+    GameObject go = Instantiate(minionPrefab, spawnPosition, Quaternion.identity);
+    go.name = "Minion_Tower";
   }
 }

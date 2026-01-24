@@ -125,7 +125,9 @@ public class SwordRole : MonoBehaviour
   {
     Vector2 down = Vector2.down;
     float targetDeg = Mathf.Atan2(down.y, down.x) * Mathf.Rad2Deg + 90f;
-    float newDeg = Mathf.MoveTowardsAngle(swordRb.rotation, targetDeg, 360f * Time.fixedDeltaTime);
-    swordRb.MoveRotation(newDeg);
+    float current = visualPivot.eulerAngles.z;
+    float next = Mathf.LerpAngle(current, targetDeg, 1f - Mathf.Exp(-12f * Time.deltaTime));
+
+    visualPivot.rotation = Quaternion.Euler(0, 0, next);
   }
 }

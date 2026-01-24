@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-  [SerializeField] private SpawnSpiral spawnSpiral;
   private void Start()
   {
     Invoke("DestroyBullet", 5f);
@@ -13,7 +12,7 @@ public class BulletBehavior : MonoBehaviour
   {
     Destroy(gameObject);
   }
-  private void OnCollisionEnter2D(Collision2D collision)
+  private void OnTriggerEnter2D(Collider2D collision)
   {
     if (collision.gameObject.CompareTag("Wall"))
     {
