@@ -29,7 +29,9 @@ public class SpawnRing : MonoBehaviour
       Vector3 bulletVector = new Vector3(bulletPositionX, bulletPositionY, 0f);
       Vector3 bulletMoveDirection = (bulletVector - centerPosition).normalized;
 
-      GameObject bullet = Instantiate(bulletPrefab, bulletVector, Quaternion.identity);
+      float deg = Mathf.Atan2(bulletMoveDirection.y, bulletMoveDirection.x) * Mathf.Rad2Deg;
+      Quaternion rot = Quaternion.Euler(0f, 0f, deg - 90f);
+      GameObject bullet = Instantiate(bulletPrefab, bulletVector, rot);
       Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
       rb.velocity = bulletMoveDirection * 5f;
 

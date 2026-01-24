@@ -13,6 +13,7 @@ public class SwordRole : MonoBehaviour
   [SerializeField] private PlayerController shieldPlayerController;
   [SerializeField] private ShowSlashTrail slashTrail;
   [SerializeField] private Transform visualPivot;
+  [SerializeField] private PlayerHealth health;
 
   [Header("Pull")]
   [SerializeField] private float maxPullStrength = 5f;
@@ -35,6 +36,14 @@ public class SwordRole : MonoBehaviour
     slashTrail = GetComponentInChildren<ShowSlashTrail>();
   }
 
+  void Update()
+  {
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+      StartPull();
+    }
+  }
+
   void FixedUpdate()
   {
     if (currentState != PullState.Idle)
@@ -51,6 +60,7 @@ public class SwordRole : MonoBehaviour
   {
     if (currentState == PullState.Idle)
     {
+      health.SetInvincible(true);
       pullTimer = 0f;
       startUpTimer = 0f;
       currentState = PullState.StartUp;
@@ -75,6 +85,7 @@ public class SwordRole : MonoBehaviour
       currentState = PullState.Idle;
       swordPlayerController.SetExternalVelocity(Vector2.zero);
       slashTrail.EndTrail();
+      health.SetInvincible(false);
       return;
     }
 
