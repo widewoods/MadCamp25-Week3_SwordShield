@@ -20,7 +20,7 @@ public class MinionController : MonoBehaviour
     if (shootTimer >= shootInterval)
     {
       shootTimer = 0f;
-      spawnRing.Spawn(8, 1.5f, transform.position);
+      StartCoroutine(spawnRing.Spawn(4, 1.5f, transform.position));
     }
   }
 }

@@ -111,4 +111,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdfaa12311304cc4a0aee44dc955be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRing: {fileID: 0}
+  spawnRing: {fileID: 2934368407856480752}
