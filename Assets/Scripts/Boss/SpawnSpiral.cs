@@ -21,7 +21,7 @@ public class SpawnSpiral : MonoBehaviour
     }
   }
 
-  IEnumerator Spawn(int bulletCount, float ringRadius, Vector3 centerPosition)
+  public IEnumerator Spawn(int bulletCount, float ringRadius, Vector3 centerPosition)
   {
     float angleStep = 360f / bulletCount;
     float angle = 0f;

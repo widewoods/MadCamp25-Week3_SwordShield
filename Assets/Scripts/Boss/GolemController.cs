@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class GolemController : MonoBehaviour
 {
-  private enum BossState { Idle, Chasing, Attacking_Strike, Attacking_Laser, Spawn_Towers, Invincible, Dead }
+  private enum BossState { Idle, Chasing, Attacking_Strike, Attacking_Laser, Spawn_Towers, Dead }
   private BossState currentState = BossState.Idle;
 
   [Header("References")]
   [SerializeField] private Transform[] playerTransforms;
   [SerializeField] private Rigidbody2D rb;
+  [SerializeField] private Transform[] towerSpawnPoints;
+  [SerializeField] private Animator animator;
+
 
   [Header("Move")]
   [SerializeField] private float moveSpeed = 3f;
@@ -26,13 +29,7 @@ public class GolemController : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    StartCoroutine(StateLoop(currentState));
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
+    stateCoroutine = StartCoroutine(StateLoop(currentState));
   }
 
   void SwitchState(BossState next)
@@ -54,20 +51,18 @@ public class GolemController : MonoBehaviour
         ChooseNextState();
         break;
       case BossState.Chasing:
-        yield return StartCoroutine(ChasingState());
+        yield return ChasingState();
         ChooseNextState();
         break;
       case BossState.Attacking_Strike:
-        yield return StartCoroutine(spawnRingAttack.Spawn(12, 2f, transform.position));
-        SwitchState(BossState.Idle);
+        yield return AttackRing();
+        ChooseNextState();
         break;
       case BossState.Spawn_Towers:
-        yield return StartCoroutine(TowerState());
-        break;
-      case BossState.Invincible:
-        yield return new WaitUntil(() => protectionBroken);
         protectionBroken = false;
-        SwitchState(BossState.Idle);
+        yield return SpawnTowersState();
+        yield return new WaitUntil(() => protectionBroken);
+        ChooseNextState();
         break;
     }
   }
@@ -78,17 +73,22 @@ public class GolemController : MonoBehaviour
     {
       SwitchState(BossState.Chasing);
     }
-    if (currentState == BossState.Chasing)
+    else if (currentState == BossState.Chasing)
     {
-      int attackChoice = Random.Range(0, 2);
+      int attackChoice = Random.Range(0, 1);
       if (attackChoice == 0)
       {
         SwitchState(BossState.Attacking_Strike);
       }
-      else
-      {
-        SwitchState(BossState.Spawn_Towers);
-      }
+
+    }
+    else if (currentState == BossState.Attacking_Strike)
+    {
+      SwitchState(BossState.Idle);
+    }
+    else if (currentState == BossState.Spawn_Towers)
+    {
+      SwitchState(BossState.Idle);
     }
   }
 
@@ -101,30 +101,36 @@ public class GolemController : MonoBehaviour
 
     while (chaseTimer < chaseDuration)
     {
-      chaseTimer += Time.deltaTime;
+      chaseTimer += Time.fixedDeltaTime;
 
       Vector3 targetPosition = targetTransform.position;
       Vector3 direction = (targetPosition - transform.position).normalized;
-      rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
+      rb.MovePosition((Vector3)rb.position + direction * moveSpeed * Time.fixedDeltaTime);
 
-      yield return null;
+      yield return new WaitForFixedUpdate();
     }
 
     rb.velocity = Vector2.zero;
   }
 
-  IEnumerator TowerState()
+  IEnumerator SpawnTowersState()
   {
-    for (int x = -2; x <= 2; x += 4)
+    for (int i = 0; i < towerSpawnPoints.Length; i++)
     {
-      for (int y = -2; y <= 2; y += 4)
-      {
-        Vector3 spawnPos = transform.position + new Vector3(x * 4f, y * 2f, 0f);
-        spawnMinion.Spawn(spawnPos);
-      }
+      spawnMinion.Spawn(towerSpawnPoints[i].position);
+      yield return new WaitForSeconds(0.5f);
     }
-    SwitchState(BossState.Invincible);
-    yield return null;
+  }
+
+  IEnumerator AttackRing()
+  {
+    animator.SetTrigger("Strike");
+    yield return new WaitForSeconds(0.7f);
+    FindObjectOfType<CameraShake>().Shake(0.3f, 0.6f);
+    yield return spawnRingAttack.Spawn(12, 2f, transform.position);
+    yield return new WaitForSeconds(0.5f);
+    yield return spawnRingAttack.Spawn(12, 1f, transform.position, 15f);
+    animator.ResetTrigger("Strike");
   }
 
   public void BreakProtection()
