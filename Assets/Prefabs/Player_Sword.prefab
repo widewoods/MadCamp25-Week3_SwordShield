@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079137625033728144}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.92387956, w: 0.38268343}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.92387956, w: 0.38268343}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4308751903726296850}
+  m_Father: {fileID: 20034023028408112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -135}
 --- !u!212 &7265760491394636481
 SpriteRenderer:
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a88c8b3aba5834dafa7ee791b08d8b2e, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,12 +110,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2664591885046366833}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0050001144, y: -0.31899998, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.005, y: -0.369, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4308751903726296850}
+  m_Father: {fileID: 20034023028408112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &3161410429346535753
 TrailRenderer:
@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 720472784627285765}
   - component: {fileID: 8439239856145891445}
   - component: {fileID: 6016572112867645064}
+  - component: {fileID: 8198868059262696403}
   - component: {fileID: 1533615471816690734}
   m_Layer: 0
   m_Name: Player_Sword
@@ -265,10 +266,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.1, y: 0.03, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4308751903726296850}
+  - {fileID: 109612473930491480}
+  - {fileID: 3291860345980910636}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6228944394130062381
@@ -297,14 +299,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2911716451152918756}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -314,8 +316,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!70 &8439239856145891445
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -364,6 +366,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+--- !u!114 &8198868059262696403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911716451152918756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b03f2cb20924187b18ef9cfe27b71d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordRb: {fileID: 0}
+  swordPlayerController: {fileID: 0}
+  shieldPlayerController: {fileID: 0}
+  slashTrail: {fileID: 0}
+  maxPullStrength: 5
+  stopDistance: 1
+  pullSlowdownFactor: 0.3
+  accelerationTime: 1
+  startUpDuration: 0.5
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1533615471816690734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,8 +408,7 @@ MonoBehaviour:
   swordRb: {fileID: 0}
   swordPlayerController: {fileID: 6228944394130062381}
   shieldPlayerController: {fileID: 0}
-  slashTrail: {fileID: 3754414024243416468}
-  visualPivot: {fileID: 4308751903726296850}
+  slashTrail: {fileID: 0}
   maxPullStrength: 40
   stopDistance: 3
   pullSlowdownFactor: 0.3
@@ -410,36 +438,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &6388607354181168800
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4308751903726296850}
-  m_Layer: 0
-  m_Name: VisualPivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4308751903726296850
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388607354181168800}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3291860345980910636}
-  - {fileID: 109612473930491480}
-  m_Father: {fileID: 20034023028408112}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
