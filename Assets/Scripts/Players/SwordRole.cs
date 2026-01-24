@@ -12,6 +12,7 @@ public class SwordRole : MonoBehaviour
   [SerializeField] private PlayerController swordPlayerController;
   [SerializeField] private PlayerController shieldPlayerController;
   [SerializeField] private ShowSlashTrail slashTrail;
+  [SerializeField] private Transform visualPivot;
 
   [Header("Pull")]
   [SerializeField] private float maxPullStrength = 5f;
@@ -103,8 +104,10 @@ public class SwordRole : MonoBehaviour
     Vector2 toShield = swordPlayerController.Position - shieldPlayerController.Position;
 
     float targetDeg = Mathf.Atan2(toShield.y, toShield.x) * Mathf.Rad2Deg + SPRITE_ROTATION_OFFSET;
-    float newDeg = Mathf.MoveTowardsAngle(swordRb.rotation, targetDeg, 360f * Time.fixedDeltaTime);
-    swordRb.MoveRotation(newDeg);
+    float current = visualPivot.eulerAngles.z;
+    float next = Mathf.LerpAngle(current, targetDeg, 1f - Mathf.Exp(-12f * Time.deltaTime));
+
+    visualPivot.rotation = Quaternion.Euler(0, 0, next);
   }
 
   private void FaceDown()
