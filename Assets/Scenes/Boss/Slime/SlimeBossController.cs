@@ -12,10 +12,23 @@ public class SlimeBossController : MonoBehaviour
         Dead
     }
 
-    public BossState CurrentState = BossState.Idle;
+    public BossState currentState = BossState.Idle;
+
+    public BossState CurrentState
+    {
+        get => currentState;
+        private set
+        {
+            if (currentState == value) return;
+
+            currentState = value;
+            Debug.Log($"[SlimeBoss] State changed [{Time.frameCount}]→ {currentState}", this);
+        }
+    }
     [Header("Stats")]
     public float maxHP = 100f;
     public float currentHP;
+    public float AttackDelayTime = 2f;
 
     // ===== 참조 =====
     [Header("References")]
@@ -40,7 +53,7 @@ public class SlimeBossController : MonoBehaviour
         currentHP = maxHP;
 
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         jumpShot = GetComponent<SlimeAttack_JumpShot>();
         bigJump = GetComponent<SlimeAttack_BigJump>();
@@ -50,10 +63,12 @@ public class SlimeBossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isBusy) return;
         if(CurrentState != BossState.Idle) return;
+
         if(CanSplit()) StartSplit();
         else NextAttack();
-        return;
+        
     }
 
     // Change-State Logic
@@ -62,18 +77,17 @@ public class SlimeBossController : MonoBehaviour
     }
 
     void NextAttack(){
-        /*
+        
         float r = Random.value;
         if(r < 0.6f) StartJumpShot();
         else StartBigJump();
-        */
-        StartJumpShot();
     }
 
     void ChangeState(BossState st, bool busy){
         CurrentState = st;
         isBusy = busy;
     }
+    
 
     // In-State Logic
     void StartJumpShot(){
@@ -83,7 +97,7 @@ public class SlimeBossController : MonoBehaviour
 
     void StartBigJump(){
         ChangeState(BossState.Attack, true);
-        bigJump.Execute(players, OnAttackFinished);
+        bigJump.Execute(OnAttackFinished);
     }
 
     void StartSplit(){
@@ -93,7 +107,13 @@ public class SlimeBossController : MonoBehaviour
 
     // Callback Functions
     void OnAttackFinished(){
+        StartCoroutine(AttackDelay());
+    }
+
+    private IEnumerator AttackDelay(){
+        yield return new WaitForSeconds(AttackDelayTime);
         ChangeState(BossState.Idle, false);
+        animator?.SetTrigger("Idle");
     }
 
     void OnSplitFinished(){

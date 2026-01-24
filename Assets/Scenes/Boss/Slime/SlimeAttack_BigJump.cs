@@ -13,12 +13,15 @@ public class SlimeAttack_BigJump : MonoBehaviour
     [SerializeField] private float jumpDuration = 0.6f;
     [SerializeField] private float postLandDelay = 0.4f;
 
+    [Header("Offscreen Jump")]
+    [SerializeField] private float offscreenMargin = 1f;
+
     [Header("Ground Check")]
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.1f;
 
-    private bool isRunning;
+    private bool isRunning=false;
     private Vector2 lockedTargetPos;
 
     private Action onFinished;
@@ -29,11 +32,13 @@ public class SlimeAttack_BigJump : MonoBehaviour
         if (animator == null) animator = GetComponentInChildren<Animator>();
     }
 
-    public void Execute(Transform[] players, Action onFinished)
+    public void Execute(Action onFinished)
     {
+        Debug.Log("Bigjump-execute");
         if (isRunning) return;
 
-        Transform target = SelectTarget(players);
+        Transform target = SelectTarget();
+
         if (target == null)
         {
             onFinished?.Invoke();
@@ -42,6 +47,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
 
         this.onFinished = onFinished;
         lockedTargetPos = target.position;
+
 
         StartCoroutine(Routine());
     }
@@ -55,23 +61,36 @@ public class SlimeAttack_BigJump : MonoBehaviour
 
         animator?.SetTrigger("Jump");
 
-        Vector2 start = rb.position;
+        var colliders = GetComponentsInChildren<Collider2D>(true);
+        var colliderStates = new bool[colliders.Length];
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            colliderStates[i] = colliders[i].enabled;
+            colliders[i].enabled = false;
+        }
+
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        Vector2 offscreenPos = GetOffscreenAbove(lockedTargetPos);
+        rb.position = offscreenPos;
+
         float t = 0f;
+        float duration = Mathf.Max(0.01f, jumpDuration);
 
         while (t < 1f)
         {
-            t += Time.deltaTime / jumpDuration;
+            t += Time.deltaTime / duration;
 
-            float height = 4f * jumpHeight * t * (1 - t); // 포물선
-            Vector2 pos = Vector2.Lerp(start, lockedTargetPos, t);
-            pos.y += height;
+            float eased = t * t;
+            Vector2 pos = Vector2.Lerp(offscreenPos, lockedTargetPos, eased);
 
             rb.MovePosition(pos);
             yield return null;
         }
 
-        // 착지 대기
-        yield return new WaitUntil(IsGrounded);
+        for (int i = 0; i < colliders.Length; i++)
+            colliders[i].enabled = colliderStates[i];
 
         animator?.SetTrigger("Land");
         yield return new WaitForSeconds(postLandDelay);
@@ -80,21 +99,34 @@ public class SlimeAttack_BigJump : MonoBehaviour
         onFinished?.Invoke();
     }
 
-    private Transform SelectTarget(Transform[] players)
+    private Vector2 GetOffscreenAbove(Vector2 targetPos)
     {
+        Camera cam = Camera.main;
+        if (cam == null)
+            return targetPos + Vector2.up * (jumpHeight + 5f);
+
+        float z = Mathf.Abs(cam.transform.position.z - transform.position.z);
+        Vector3 topCenter = cam.ViewportToWorldPoint(new Vector3(0.5f, 1f, z));
+        return new Vector2(targetPos.x, topCenter.y + offscreenMargin);
+    }
+
+    private Transform SelectTarget()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("player");
         if (players == null || players.Length == 0)
             return null;
 
-        // 살아있는 플레이어만 수집
         var alive = new System.Collections.Generic.List<Transform>();
+
         foreach (var p in players)
         {
-            if (p != null && p.gameObject.activeInHierarchy)
-                alive.Add(p);
+            if (p != null && p.activeInHierarchy)
+                alive.Add(p.transform);
         }
 
         if (alive.Count == 0)
             return null;
+
 
         int idx = UnityEngine.Random.Range(0, alive.Count);
         return alive[idx];
