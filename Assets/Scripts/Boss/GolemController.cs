@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class GolemController : MonoBehaviour
 {
@@ -13,6 +16,12 @@ public class GolemController : MonoBehaviour
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private Transform[] towerSpawnPoints;
   [SerializeField] private Animator animator;
+  [SerializeField] private BossHealth bossHealth;
+
+  [Header("Audio")]
+  [SerializeField] private AudioClip strikeSound;
+  [SerializeField] private AudioClip humSound;
+  [SerializeField] private AudioSource audioSource;
 
 
   [Header("Move")]
@@ -24,12 +33,26 @@ public class GolemController : MonoBehaviour
   [SerializeField] private SpawnMinion spawnMinion;
 
   private Coroutine stateCoroutine;
-  private bool protectionBroken = false;
+  private bool protectionBroken = true;
+  private bool enteredPhase2 = false;
+
+  public event Action OnBossDeath;
+  public bool ProtectionBroken => protectionBroken;
+
+  void OnEnable()
+  {
+    MinionController.OnTowersBroken += BreakProtection;
+  }
 
   // Start is called before the first frame update
   void Start()
   {
     stateCoroutine = StartCoroutine(StateLoop(currentState));
+    audioSource = GetComponent<AudioSource>();
+  }
+  void OnDisable()
+  {
+    MinionController.OnTowersBroken -= BreakProtection;
   }
 
   void SwitchState(BossState next)
@@ -69,13 +92,23 @@ public class GolemController : MonoBehaviour
 
   void ChooseNextState()
   {
+    if (bossHealth.phase == BossHealth.BossPhase.Phase2 && !enteredPhase2)
+    {
+      enteredPhase2 = true;
+      SwitchState(BossState.Spawn_Towers);
+      return;
+    }
+
     if (currentState == BossState.Idle)
     {
+      audioSource.Stop();
+      audioSource.clip = humSound;
+      audioSource.Play();
       SwitchState(BossState.Chasing);
     }
     else if (currentState == BossState.Chasing)
     {
-      int attackChoice = Random.Range(0, 1);
+      int attackChoice = UnityEngine.Random.Range(0, 1);
       if (attackChoice == 0)
       {
         SwitchState(BossState.Attacking_Strike);
@@ -94,10 +127,10 @@ public class GolemController : MonoBehaviour
 
   IEnumerator ChasingState()
   {
-    float chaseDuration = 3f;
+    float chaseDuration = 1.5f;
     float chaseTimer = 0f;
 
-    Transform targetTransform = playerTransforms[Random.Range(0, 2)];
+    Transform targetTransform = playerTransforms[UnityEngine.Random.Range(0, 2)];
 
     while (chaseTimer < chaseDuration)
     {
@@ -115,6 +148,7 @@ public class GolemController : MonoBehaviour
 
   IEnumerator SpawnTowersState()
   {
+    animator.SetBool("isProtected", true);
     for (int i = 0; i < towerSpawnPoints.Length; i++)
     {
       spawnMinion.Spawn(towerSpawnPoints[i].position);
@@ -127,6 +161,9 @@ public class GolemController : MonoBehaviour
     animator.SetTrigger("Strike");
     yield return new WaitForSeconds(0.7f);
     FindObjectOfType<CameraShake>().Shake(0.3f, 0.6f);
+    audioSource.Stop();
+    audioSource.clip = strikeSound;
+    audioSource.Play();
     yield return spawnRingAttack.Spawn(12, 2f, transform.position);
     yield return new WaitForSeconds(0.5f);
     yield return spawnRingAttack.Spawn(12, 1f, transform.position, 15f);
@@ -135,6 +172,16 @@ public class GolemController : MonoBehaviour
 
   public void BreakProtection()
   {
+    animator.SetBool("isProtected", false);
     protectionBroken = true;
+  }
+
+  public void Die()
+  {
+    GetComponentInChildren<Light2D>().enabled = false;
+    StopCoroutine(stateCoroutine);
+    animator.SetBool("isDead", true);
+    currentState = BossState.Dead;
+    OnBossDeath?.Invoke();
   }
 }
