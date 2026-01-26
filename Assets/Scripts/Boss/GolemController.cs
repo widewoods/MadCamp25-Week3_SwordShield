@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 
 public class GolemController : MonoBehaviour
 {
-  private enum BossState { Idle, Chasing, Attacking_Strike, Attacking_Laser, Spawn_Towers, Dead }
+  private enum BossState { Idle, Chasing, Attacking_Strike, Attacking_Burst, Spawn_Towers, Dead }
   private BossState currentState = BossState.Idle;
 
   [Header("References")]
@@ -16,7 +16,7 @@ public class GolemController : MonoBehaviour
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private Transform[] towerSpawnPoints;
   [SerializeField] private Animator animator;
-  [SerializeField] private BossHealth bossHealth;
+
 
   [Header("Audio")]
   [SerializeField] private AudioClip strikeSound;
@@ -31,6 +31,7 @@ public class GolemController : MonoBehaviour
   [Header("Attacks")]
   [SerializeField] private SpawnRing spawnRingAttack;
   [SerializeField] private SpawnMinion spawnMinion;
+  [SerializeField] private SpawnSpiral spawnSpiral;
 
   private Coroutine stateCoroutine;
   private bool protectionBroken = true;
@@ -41,7 +42,7 @@ public class GolemController : MonoBehaviour
 
   void OnEnable()
   {
-    MinionController.OnTowersBroken += BreakProtection;
+    TowerHealth.OnTowersBroken += BreakProtection;
   }
 
   // Start is called before the first frame update
@@ -52,7 +53,7 @@ public class GolemController : MonoBehaviour
   }
   void OnDisable()
   {
-    MinionController.OnTowersBroken -= BreakProtection;
+    TowerHealth.OnTowersBroken -= BreakProtection;
   }
 
   void SwitchState(BossState next)
@@ -81,6 +82,10 @@ public class GolemController : MonoBehaviour
         yield return AttackRing();
         ChooseNextState();
         break;
+      case BossState.Attacking_Burst:
+        yield return BurstAttack();
+        ChooseNextState();
+        break;
       case BossState.Spawn_Towers:
         protectionBroken = false;
         yield return SpawnTowersState();
@@ -92,7 +97,7 @@ public class GolemController : MonoBehaviour
 
   void ChooseNextState()
   {
-    if (bossHealth.phase == BossHealth.BossPhase.Phase2 && !enteredPhase2)
+    if (!protectionBroken && !enteredPhase2)
     {
       enteredPhase2 = true;
       SwitchState(BossState.Spawn_Towers);
@@ -108,20 +113,25 @@ public class GolemController : MonoBehaviour
     }
     else if (currentState == BossState.Chasing)
     {
-      int attackChoice = UnityEngine.Random.Range(0, 1);
+      int attackChoice = UnityEngine.Random.Range(0, 2);
       if (attackChoice == 0)
       {
         SwitchState(BossState.Attacking_Strike);
       }
+      else
+      {
+        SwitchState(BossState.Attacking_Burst);
+      }
 
     }
-    else if (currentState == BossState.Attacking_Strike)
+    else if (currentState == BossState.Attacking_Strike || currentState == BossState.Attacking_Burst)
     {
       SwitchState(BossState.Idle);
     }
     else if (currentState == BossState.Spawn_Towers)
     {
       SwitchState(BossState.Idle);
+      enteredPhase2 = false;
     }
   }
 
@@ -164,10 +174,23 @@ public class GolemController : MonoBehaviour
     audioSource.Stop();
     audioSource.clip = strikeSound;
     audioSource.Play();
-    yield return spawnRingAttack.Spawn(12, 2f, transform.position);
+    yield return spawnRingAttack.Spawn(8, 2f, transform.position);
     yield return new WaitForSeconds(0.5f);
-    yield return spawnRingAttack.Spawn(12, 1f, transform.position, 15f);
+    yield return spawnRingAttack.Spawn(8, 1f, transform.position, 360f / 8 / 2);
     animator.ResetTrigger("Strike");
+  }
+
+  IEnumerator BurstAttack()
+  {
+    animator.SetTrigger("Glow");
+    yield return new WaitForSeconds(0.5f);
+    yield return spawnSpiral.Spawn(18, 2f, transform.position);
+    animator.ResetTrigger("Glow");
+  }
+
+  public void Phase2()
+  {
+    protectionBroken = false;
   }
 
   public void BreakProtection()
@@ -183,5 +206,6 @@ public class GolemController : MonoBehaviour
     animator.SetBool("isDead", true);
     currentState = BossState.Dead;
     OnBossDeath?.Invoke();
+    gameObject.GetComponent<CircleCollider2D>().enabled = false;
   }
 }

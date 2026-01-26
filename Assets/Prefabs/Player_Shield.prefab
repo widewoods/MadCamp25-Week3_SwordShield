@@ -14,12 +14,11 @@ GameObject:
   - component: {fileID: 8452443949802244963}
   - component: {fileID: 7135792712613176698}
   - component: {fileID: 2612510805336118213}
-
-
-  - component: {fileID: 420475969679813676}
+  - component: {fileID: 2414614244299053085}
+  - component: {fileID: 8060922406358376389}
   m_Layer: 6
   m_Name: Player_Shield
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRb: {fileID: 8452443949802244963}
-  baseSpeed: 15
+  baseSpeed: 7
   acceleration: 70
   deceleration: 110
   turnAcceleration: 150
@@ -183,7 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04964101978f84bed8d7543730c3faee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  health: 5
+  sword_hit: {fileID: 0}
 --- !u!114 &2414614244299053085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,4 +196,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b112f45f0dc3c4905abc4a01d7d89890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordRole: {fileID: 0}
+--- !u!114 &8060922406358376389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3689514504282425531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4401df3b11c5497b8b3afb0f5f2b93c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

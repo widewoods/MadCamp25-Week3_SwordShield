@@ -25,20 +25,14 @@ public class PlayerHealth : MonoBehaviour
       audioSource.time = 0.15f;
       audioSource.Play();
 
-      if (hit.name == "Golem_Prefab")
+      EnemyHealth enemyHealth;
+      if (hit.TryGetComponent<EnemyHealth>(out enemyHealth))
       {
-        BossHealth bossHealth = hit.GetComponent<BossHealth>();
-        bossHealth.DamageBoss(1);
-        HitStop.Instance.Do(0.06f, 0.6f);
-        FindObjectOfType<CameraShake>().Shake(0.2f, 0.3f);
+        enemyHealth.TakeDamage(1);
       }
-      if (hit.name == "Minion_Tower")
+      else
       {
-        Debug.Log("Tower hit");
-        MinionController tower = hit.GetComponent<MinionController>();
-        tower.Break();
-        HitStop.Instance.Do(0.03f, 0.2f);
-        FindObjectOfType<CameraShake>().Shake(0.1f, 0.01f);
+        Debug.Log("Enemy health script not found");
       }
       return;
     }
