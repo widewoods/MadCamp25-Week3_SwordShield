@@ -16,7 +16,9 @@ GameObject:
   - component: {fileID: 7954147067810772684}
   - component: {fileID: 876528736380625476}
   - component: {fileID: 2850084854835920440}
-  m_Layer: 0
+  - component: {fileID: 5816374390356085251}
+  - component: {fileID: 4594939312348806682}
+  m_Layer: 7
   m_Name: SlimeBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +35,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13, y: -0.7419024, z: -0.011930413}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +65,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &2849096179788605201
 SpriteRenderer:
@@ -156,8 +158,6 @@ MonoBehaviour:
   AttackDelayTime: 2
   rb: {fileID: 0}
   animator: {fileID: 0}
-  splitCount: 0
-  maxSplitCount: 2
 --- !u!114 &7954147067810772684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,3 +212,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc784237717a4a54b4d46f440cbe658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slimePrefab1: {fileID: 2362838094992181545, guid: 0db024c515e55408d9204032fd422a5c, type: 3}
+  slimePrefab2: {fileID: 1644492533154010256, guid: dfda21946e05c45ae9be3bb9b81e407f, type: 3}
+  spawnOffsetRadius: 1
+--- !u!58 &5816374390356085251
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142910497060790646}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.052063327, y: -0.05339829}
+  serializedVersion: 2
+  m_Radius: 0.18783912
+--- !u!114 &4594939312348806682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142910497060790646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c1f1461c53084c73acc9bf62ad2758b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LandEffectPrefab: {fileID: 2911150635222211621, guid: 76123e11256314742a9a40390fffa0ae, type: 3}
+  currentEffect: {fileID: 0}
+  offset: {x: -0.5, y: -2.5}
