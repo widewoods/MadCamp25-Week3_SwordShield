@@ -24,7 +24,7 @@ public class GoldenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StateCoroutine = StartCoroutine(StateRoutine());
+        //StateCoroutine = StartCoroutine(StateRoutine());
     }
     void Awake()
     {
@@ -45,7 +45,7 @@ public class GoldenController : MonoBehaviour
             if (isBusy) return;
 
             isBusy = true;
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
             Debug.Log("Attack");
             animator.SetTrigger("Attack");
             SupaDash.StartRicochetRandom(OnActionFinished);

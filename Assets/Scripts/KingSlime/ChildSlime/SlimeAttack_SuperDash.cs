@@ -44,12 +44,14 @@ public class SlimeAttack_SuperDash : MonoBehaviour
 
     private IEnumerator StopAfterTime(Action OnFinished)
     {
+        Debug.Log("StopAfterTime");
         yield return new WaitForSeconds(dashDuration);
         StopRicochet(OnFinished);
     }
 
     private void StopRicochet(Action OnFinished)
     {
+        Debug.Log("StopRichchet");
         isDashing = false;
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
@@ -63,7 +65,7 @@ public class SlimeAttack_SuperDash : MonoBehaviour
         if (((1 << col.gameObject.layer) & wallLayer) == 0) return;
 
         Vector2 normal = col.GetContact(0).normal;
-        Direction = Vector2.Reflect(Direction, normal);
+        Direction = Vector2.Reflect(Direction, normal).normalized;
 
         // ✅ 속도 변화 없이 방향만 반사
         rb.velocity = Direction * dashSpeed;

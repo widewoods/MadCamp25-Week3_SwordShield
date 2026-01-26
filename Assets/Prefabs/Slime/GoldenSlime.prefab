@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.0640773, y: 2.7690868, z: -0.048700955}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   dashSpeed: 8
-  dashDuration: 2
+  dashDuration: 120
   wallLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -206,6 +206,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.009816927}
   serializedVersion: 2
-  m_Radius: 0.16
+  m_Radius: 0.07066602
