@@ -16,7 +16,7 @@ public class GolemController : MonoBehaviour
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private Transform[] towerSpawnPoints;
   [SerializeField] private Animator animator;
-  [SerializeField] private BossHealth bossHealth;
+
 
   [Header("Audio")]
   [SerializeField] private AudioClip strikeSound;
@@ -41,7 +41,7 @@ public class GolemController : MonoBehaviour
 
   void OnEnable()
   {
-    MinionController.OnTowersBroken += BreakProtection;
+    TowerHealth.OnTowersBroken += BreakProtection;
   }
 
   // Start is called before the first frame update
@@ -52,7 +52,7 @@ public class GolemController : MonoBehaviour
   }
   void OnDisable()
   {
-    MinionController.OnTowersBroken -= BreakProtection;
+    TowerHealth.OnTowersBroken -= BreakProtection;
   }
 
   void SwitchState(BossState next)
@@ -92,9 +92,8 @@ public class GolemController : MonoBehaviour
 
   void ChooseNextState()
   {
-    if (bossHealth.phase == BossHealth.BossPhase.Phase2 && !enteredPhase2)
+    if (enteredPhase2)
     {
-      enteredPhase2 = true;
       SwitchState(BossState.Spawn_Towers);
       return;
     }
@@ -168,6 +167,11 @@ public class GolemController : MonoBehaviour
     yield return new WaitForSeconds(0.5f);
     yield return spawnRingAttack.Spawn(12, 1f, transform.position, 15f);
     animator.ResetTrigger("Strike");
+  }
+
+  public void Phase2()
+  {
+    enteredPhase2 = true;
   }
 
   public void BreakProtection()

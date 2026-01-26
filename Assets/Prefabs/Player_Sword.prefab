@@ -363,7 +363,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04964101978f84bed8d7543730c3faee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  health: 1
+  sword_hit: {fileID: 8300000, guid: cd17f759a53f0433586a206616b5bef6, type: 3}
 --- !u!114 &1533615471816690734
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2934368407856480752}
   - component: {fileID: -8699536310585186841}
   - component: {fileID: 2543355286729262065}
+  - component: {fileID: 3337242916322381455}
   m_Layer: 7
   m_Name: Minion_Tower
   m_TagString: Enemy
@@ -114,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRing: {fileID: 2934368407856480752}
-  particlePrefab: {fileID: 5249893326752741942, guid: 8ba90b463d0554d62a2ad3a55dc306ab, type: 3}
+  golemController: {fileID: 0}
 --- !u!70 &2543355286729262065
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -150,6 +151,24 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &3337242916322381455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963375268365194394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba56312fca0494ec09c3b0b995e0e078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  timeScale: 0.06
+  durationRealtime: 0.3
+  shakeDuration: 0.1
+  shakeMagnitude: 0.1
+  particlePrefab: {fileID: 5249893326752741942, guid: 8ba90b463d0554d62a2ad3a55dc306ab, type: 3}
 --- !u!1 &4001888227312239076
 GameObject:
   m_ObjectHideFlags: 0
