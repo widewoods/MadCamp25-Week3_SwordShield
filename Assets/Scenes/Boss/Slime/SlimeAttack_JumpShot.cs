@@ -1,12 +1,14 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SlimeAttack_JumpShot : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
+    [SerializeField] private BoxCollider2D boxCollider;
 
     [Header("Shoot")]
     [SerializeField] private GameObject bulletPrefab;
@@ -14,38 +16,22 @@ public class SlimeAttack_JumpShot : MonoBehaviour
     [SerializeField] private float bulletSpeed = 7f;
     [SerializeField] private float spreadLen = 2f;
 
-
     private bool isRunning = false;
-
-    public void Execute(Action onFinished)
-    {
-        if (isRunning) return;
-        StartCoroutine(Routine(onFinished));
-    }
-
+    
     private void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
-        if (animator == null) animator = GetComponentInChildren<Animator>();
-    }
-
-    private IEnumerator Routine(Action onFinished)
-    {
-        isRunning = true;
-
-        Debug.Log("jumpshot-routine");
-        yield return new WaitForSeconds(1f);
-        ShootRadial();
-        
-        isRunning = false;
-        onFinished?.Invoke();
+        if (animator == null) animator = GetComponent<Animator>();
+        if (boxCollider == null) boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void ShootRadial()
     {
         if (bulletPrefab == null) return;
 
-        Vector2 origin = rb.position;
+        Vector2 origin = boxCollider != null
+            ? (Vector2)boxCollider.bounds.center
+            : rb.position;
         float step = 360f / Mathf.Max(1, bulletCount);
 
         for (int i = 0; i < bulletCount; i++)

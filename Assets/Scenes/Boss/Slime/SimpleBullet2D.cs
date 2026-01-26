@@ -18,7 +18,6 @@ public class SimpleBullet2D : MonoBehaviour
     /// </summary>
     public void Launch(Vector2 dir, float speed)
     {
-        Debug.Log($"bullet-launch: {dir}");
         if (rb != null)
         {
             rb.velocity = dir.normalized * speed;

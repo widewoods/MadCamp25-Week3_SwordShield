@@ -14,7 +14,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
     [SerializeField] private float postLandDelay = 0.4f;
 
     [Header("Offscreen Jump")]
-    [SerializeField] private float offscreenMargin = 1f;
+    [SerializeField] private float offscreenMargin = 3f;
 
     [Header("Ground Check")]
     [SerializeField] private LayerMask groundMask;
@@ -25,6 +25,13 @@ public class SlimeAttack_BigJump : MonoBehaviour
     private Vector2 lockedTargetPos;
 
     private Action onFinished;
+    private Transform Target;
+    private Coroutine landRoutine;
+    private Collider2D[] cachedColliders;
+    private bool[] cachedColliderStates;
+    private Renderer[] cachedRenderers;
+    private const string JumpLayerName = "TransparentFX";
+    private const string DefaultLayerName = "Enemy";
 
     private void Awake()
     {
@@ -32,85 +39,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
         if (animator == null) animator = GetComponentInChildren<Animator>();
     }
 
-    public void Execute(Action onFinished)
-    {
-        Debug.Log("Bigjump-execute");
-        if (isRunning) return;
-
-        Transform target = SelectTarget();
-
-        if (target == null)
-        {
-            onFinished?.Invoke();
-            return;
-        }
-
-        this.onFinished = onFinished;
-        lockedTargetPos = target.position;
-
-
-        StartCoroutine(Routine());
-    }
-
-    private IEnumerator Routine()
-    {
-        isRunning = true;
-
-        animator?.SetTrigger("Charge");
-        yield return new WaitForSeconds(0.3f); // 텔레그래프
-
-        animator?.SetTrigger("Jump");
-
-        var colliders = GetComponentsInChildren<Collider2D>(true);
-        var colliderStates = new bool[colliders.Length];
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            colliderStates[i] = colliders[i].enabled;
-            colliders[i].enabled = false;
-        }
-
-        rb.velocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-
-        Vector2 offscreenPos = GetOffscreenAbove(lockedTargetPos);
-        rb.position = offscreenPos;
-
-        float t = 0f;
-        float duration = Mathf.Max(0.01f, jumpDuration);
-
-        while (t < 1f)
-        {
-            t += Time.deltaTime / duration;
-
-            float eased = t * t;
-            Vector2 pos = Vector2.Lerp(offscreenPos, lockedTargetPos, eased);
-
-            rb.MovePosition(pos);
-            yield return null;
-        }
-
-        for (int i = 0; i < colliders.Length; i++)
-            colliders[i].enabled = colliderStates[i];
-
-        animator?.SetTrigger("Land");
-        yield return new WaitForSeconds(postLandDelay);
-
-        isRunning = false;
-        onFinished?.Invoke();
-    }
-
-    private Vector2 GetOffscreenAbove(Vector2 targetPos)
-    {
-        Camera cam = Camera.main;
-        if (cam == null)
-            return targetPos + Vector2.up * (jumpHeight + 5f);
-
-        float z = Mathf.Abs(cam.transform.position.z - transform.position.z);
-        Vector3 topCenter = cam.ViewportToWorldPoint(new Vector3(0.5f, 1f, z));
-        return new Vector2(targetPos.x, topCenter.y + offscreenMargin);
-    }
-
-    private Transform SelectTarget()
+    public Transform SelectTarget()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("player");
         if (players == null || players.Length == 0)
@@ -132,23 +61,114 @@ public class SlimeAttack_BigJump : MonoBehaviour
         return alive[idx];
     }
 
-
-    private bool IsGrounded()
+    public void JumpTarget()
     {
-        if (groundCheck == null)
-            return rb.velocity.y <= 0.01f;
+        Target = SelectTarget();
+        SetLayerRecursive(JumpLayerName);
+        HideTarget();
+        CacheAndDisableColliders();
 
-        return Physics2D.OverlapCircle(
-            groundCheck.position,
-            groundCheckRadius,
-            groundMask
-        ) != null;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        Vector2 offscreenPos = GetOffscreenAbove(rb.position);
+        rb.position = offscreenPos;
     }
 
-    private void OnDrawGizmosSelected()
+    public void LandTarget()
     {
-        if (groundCheck == null) return;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        Debug.Log("landtarget");
+        if (Target == null) return;
+        ShowTarget();
+
+        if (landRoutine != null)
+            StopCoroutine(landRoutine);
+
+        landRoutine = StartCoroutine(LandRoutine(Target.position));
+    }
+
+    private IEnumerator LandRoutine(Vector2 targetPos)
+    {
+        isRunning = true;
+
+        Vector2 start = rb.position;
+        float t = 0f;
+        float duration = Mathf.Max(0.01f, jumpDuration);
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            float eased = t * t;
+            Vector2 pos = Vector2.Lerp(start, targetPos, eased);
+            rb.MovePosition(pos);
+            yield return null;
+        }
+
+        RestoreColliders();
+        isRunning = false;
+    }
+
+    private void CacheAndDisableColliders()
+    {
+        cachedColliders = GetComponentsInChildren<Collider2D>(true);
+        cachedColliderStates = new bool[cachedColliders.Length];
+        for (int i = 0; i < cachedColliders.Length; i++)
+        {
+            cachedColliderStates[i] = cachedColliders[i].enabled;
+            cachedColliders[i].enabled = false;
+        }
+    }
+
+    private void RestoreColliders()
+    {
+        if (cachedColliders == null || cachedColliderStates == null) return;
+        for (int i = 0; i < cachedColliders.Length; i++)
+            cachedColliders[i].enabled = cachedColliderStates[i];
+
+        SetLayerRecursive(DefaultLayerName);
+    }
+
+    public void HideTarget()
+    {
+        CacheRenderers();
+        if (cachedRenderers == null) return;
+
+        for (int i = 0; i < cachedRenderers.Length; i++)
+            cachedRenderers[i].enabled = false;
+    }
+
+    private void ShowTarget()
+    {
+        if (cachedRenderers == null) return;
+
+        for (int i = 0; i < cachedRenderers.Length; i++)
+            cachedRenderers[i].enabled = true;
+    }
+
+    private void CacheRenderers()
+    {
+        if (cachedRenderers != null) return;
+        cachedRenderers = GetComponentsInChildren<Renderer>(true);
+    }
+
+    private Vector2 GetOffscreenAbove(Vector2 fromPos)
+    {
+        Camera cam = Camera.main;
+        if (cam == null)
+            return fromPos + Vector2.up * (jumpHeight + 5f);
+
+        float z = Mathf.Abs(cam.transform.position.z - transform.position.z);
+        Vector3 topCenter = cam.ViewportToWorldPoint(new Vector3(0.5f, 1f, z));
+        return new Vector2(fromPos.x, topCenter.y + offscreenMargin);
+    }
+
+    private void SetLayerRecursive(string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        if (layer < 0) return;
+
+        Transform[] transforms = GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < transforms.Length; i++)
+            transforms[i].gameObject.layer = layer;
     }
 }

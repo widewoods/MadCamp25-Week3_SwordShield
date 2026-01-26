@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class SlimeBossController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public enum BossState {
+    public enum BossState{
         Idle,
         Attack,
         Split,
         Dead
     }
-
     public BossState currentState = BossState.Idle;
-
     public BossState CurrentState
     {
         get => currentState;
@@ -22,9 +19,10 @@ public class SlimeBossController : MonoBehaviour
             if (currentState == value) return;
 
             currentState = value;
-            Debug.Log($"[SlimeBoss] State changed [{Time.frameCount}]→ {currentState}", this);
+            //Debug.Log($"[SlimeBoss] State changed [{Time.frameCount}]→ {currentState}", this);
         }
     }
+
     [Header("Stats")]
     public float maxHP = 100f;
     public float currentHP;
@@ -34,8 +32,8 @@ public class SlimeBossController : MonoBehaviour
     [Header("References")]
     public Rigidbody2D rb;
     public Animator animator;
-    public Transform[] players;
 
+    [Header("Scripts")]
     private SlimeAttack_JumpShot jumpShot;
     private SlimeAttack_BigJump bigJump;
     private SlimeSplitHandler splitHandler;
@@ -47,14 +45,17 @@ public class SlimeBossController : MonoBehaviour
 
     // ===== 내부 제어 =====
     private bool isBusy = false;
-
+    // Start is called before the first frame update
     void Awake()
     {
+        // Stats
         currentHP = maxHP;
 
+        // Reference 
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
 
+        // Scripts
         jumpShot = GetComponent<SlimeAttack_JumpShot>();
         bigJump = GetComponent<SlimeAttack_BigJump>();
         splitHandler = GetComponent<SlimeSplitHandler>();
@@ -63,46 +64,31 @@ public class SlimeBossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isBusy) return;
-        if(CurrentState != BossState.Idle) return;
-
-        if(CanSplit()) StartSplit();
-        else NextAttack();
-        
+        if(isBusy) return;
+        StartNextAttack();
     }
 
     // Change-State Logic
-    bool CanSplit(){
-        return currentHP <= maxHP * 0.5f && splitCount < maxSplitCount;
-    }
-
-    void NextAttack(){
-        
-        float r = Random.value;
-        if(r < 0.6f) StartJumpShot();
-        else StartBigJump();
-    }
-
     void ChangeState(BossState st, bool busy){
         CurrentState = st;
         isBusy = busy;
     }
-    
 
     // In-State Logic
+    void StartNextAttack(){
+        float r = Random.value;
+        if(r<.6f)StartJumpShot();
+        else StartBigJump();
+    }
+
     void StartJumpShot(){
         ChangeState(BossState.Attack, true);
-        jumpShot.Execute(OnAttackFinished);
+        animator.SetTrigger("SpineAttack");
     }
 
     void StartBigJump(){
         ChangeState(BossState.Attack, true);
-        bigJump.Execute(OnAttackFinished);
-    }
-
-    void StartSplit(){
-        ChangeState(BossState.Split, true);
-        splitHandler.Execute(OnSplitFinished);
+        animator.SetTrigger("Walk");
     }
 
     // Callback Functions
@@ -111,27 +97,10 @@ public class SlimeBossController : MonoBehaviour
     }
 
     private IEnumerator AttackDelay(){
+        ChangeState(BossState.Idle, true);
+        animator.SetTrigger("Idle");
         yield return new WaitForSeconds(AttackDelayTime);
-        ChangeState(BossState.Idle, false);
-        animator?.SetTrigger("Idle");
+        isBusy = false;
     }
 
-    void OnSplitFinished(){
-        ChangeState(BossState.Idle, false);
-    }
-
-    // Playerable Interactions
-    public void TakeDamage(float dmg)
-    {
-        if (CurrentState == BossState.Dead) return;
-        currentHP -= dmg;
-        if (currentHP <= 0) Die();
-    }
-
-    void Die()
-    {
-        CurrentState = BossState.Dead;
-        animator.SetTrigger("Die");
-        Destroy(gameObject, 1.5f);
-    }
 }
