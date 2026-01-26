@@ -10,6 +10,7 @@ public class CameraShake : MonoBehaviour
 
   public void Shake(float duration = 0.12f, float magnitude = 0.15f)
   {
+    Debug.Log("Shake");
     if (co != null) StopCoroutine(co);
     co = StartCoroutine(ShakeRoutine(duration, magnitude));
   }
