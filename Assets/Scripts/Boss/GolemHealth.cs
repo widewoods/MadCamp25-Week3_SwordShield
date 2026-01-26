@@ -8,6 +8,7 @@ public class GolemHealth : EnemyHealth
 
   public override void TakeDamage(int damage)
   {
+    if (!golemController.ProtectionBroken) return;
     base.TakeDamage(damage);
     if (currentHealth <= 0)
     {

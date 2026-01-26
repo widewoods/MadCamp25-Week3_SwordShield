@@ -17,6 +17,7 @@ public class TowerHealth : EnemyHealth
 
   public override void TakeDamage(int damage)
   {
+    base.TakeDamage(damage);
     towerCount--;
     GameObject particle = Instantiate(particlePrefab, transform.position, Quaternion.identity);
     particle.GetComponent<ParticleSystem>().Play();

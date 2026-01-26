@@ -164,10 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  timeScale: 0.06
-  durationRealtime: 0.3
-  shakeDuration: 0.1
-  shakeMagnitude: 0.1
+  timeScale: 0.2
+  durationRealtime: 0.1
+  shakeDuration: 0.04
+  shakeMagnitude: 0.04
   particlePrefab: {fileID: 5249893326752741942, guid: 8ba90b463d0554d62a2ad3a55dc306ab, type: 3}
 --- !u!1 &4001888227312239076
 GameObject:

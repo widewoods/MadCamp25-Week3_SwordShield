@@ -11,15 +11,6 @@ public class SpawnSpiral : MonoBehaviour
 
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-    if (Input.GetKeyDown(KeyCode.Space))
-    {
-      IEnumerator spawn = Spawn(12, 2f, transform.position);
-      StartCoroutine(spawn);
-    }
-  }
 
   public IEnumerator Spawn(int bulletCount, float ringRadius, Vector3 centerPosition)
   {
@@ -35,11 +26,11 @@ public class SpawnSpiral : MonoBehaviour
       Vector3 bulletMoveDirection = (bulletVector - centerPosition).normalized;
 
       GameObject bullet = Instantiate(bulletPrefab, bulletVector, Quaternion.identity);
-      Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-      rb.velocity = bulletMoveDirection * 5f;
+      BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
+      bulletBehavior.SetInitialDirection(bulletMoveDirection);
 
       angle += angleStep;
-      yield return new WaitForSeconds(0.05f);
+      yield return new WaitForSeconds(0.5f / bulletCount);
     }
   }
 }
