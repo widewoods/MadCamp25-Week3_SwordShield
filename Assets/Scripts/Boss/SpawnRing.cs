@@ -32,8 +32,8 @@ public class SpawnRing : MonoBehaviour
       float deg = Mathf.Atan2(bulletMoveDirection.y, bulletMoveDirection.x) * Mathf.Rad2Deg;
       Quaternion rot = Quaternion.Euler(0f, 0f, deg - 90f);
       GameObject bullet = Instantiate(bulletPrefab, bulletVector, rot);
-      Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-      rb.velocity = bulletMoveDirection * 5f;
+      BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
+      bulletBehavior.SetInitialDirection(bulletMoveDirection);
 
       angle += angleStep;
     }
