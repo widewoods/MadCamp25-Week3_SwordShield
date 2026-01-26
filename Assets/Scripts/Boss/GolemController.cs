@@ -140,7 +140,8 @@ public class GolemController : MonoBehaviour
     float chaseDuration = 1.5f;
     float chaseTimer = 0f;
 
-    Transform targetTransform = playerTransforms[UnityEngine.Random.Range(0, 2)];
+    int randomTarget = UnityEngine.Random.Range(0, PlayerRegistry.Players.Count);
+    Transform targetTransform = PlayerRegistry.Players[randomTarget];
 
     while (chaseTimer < chaseDuration)
     {

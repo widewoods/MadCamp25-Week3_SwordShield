@@ -1,0 +1,238 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MageController : MonoBehaviour
+{
+  private enum BossState { Idle, Chasing, Attack_Shockwave, Attack_Missile, Attack_Frenzy, Attack_Sword, Attack_Circle, Dead }
+  private BossState currentState = BossState.Idle;
+
+  [Header("References")]
+  [SerializeField] private Animator animator;
+  [SerializeField] private Transform spriteTransform;
+  [SerializeField] private Rigidbody2D rb;
+  [SerializeField] private SpriteRenderer spriteRenderer;
+
+
+  [Header("Move")]
+  [SerializeField] private float moveSpeed = 3f;
+  [SerializeField] private float idleTime = 1f;
+
+  [Header("Homing Attack")]
+  [SerializeField] private SpawnArc spawnArc;
+  [SerializeField] private GameObject homingBulletPrefab;
+  [SerializeField] private int homingMissileCount;
+  [SerializeField] private Transform[] missileSpawners;
+
+  [Header("Shockwave Attack")]
+  [SerializeField] private SpawnSimple spawnSimple;
+  [SerializeField] private GameObject shockwaveBulletPrefab;
+
+  [Header("Frenzy Attack")]
+  [SerializeField] private SpawnRing spawnRing;
+  [SerializeField] private GameObject frenzyBulletPrefab;
+
+  private bool attackStarted;
+
+  private bool enteredPhase2;
+  private bool facingLeft;
+  private Coroutine stateCoroutine;
+  private Transform target;
+
+  void Start()
+  {
+    target = PlayerRegistry.Players[0];
+    stateCoroutine = StartCoroutine(StateLoop(currentState));
+  }
+
+  void Update()
+  {
+    if (Input.GetKeyDown(KeyCode.Tab))
+    {
+      enteredPhase2 = true;
+    }
+  }
+
+  IEnumerator StateLoop(BossState s)
+  {
+    switch (s)
+    {
+      case BossState.Idle:
+        yield return new WaitForSeconds(idleTime);
+        ChooseNextState();
+        break;
+      case BossState.Chasing:
+        yield return Chase();
+        ChooseNextState();
+        break;
+      case BossState.Attack_Shockwave:
+        yield return ShockwaveAttack();
+        ChooseNextState();
+        break;
+      case BossState.Attack_Frenzy:
+        yield return FrenzyAttack();
+        ChooseNextState();
+        break;
+      case BossState.Attack_Missile:
+        yield return MissileAttack();
+        ChooseNextState();
+        break;
+    }
+  }
+
+  void SwitchState(BossState next)
+  {
+    if (currentState == BossState.Dead) return;
+
+    if (stateCoroutine != null) StopCoroutine(stateCoroutine);
+
+    currentState = next;
+    stateCoroutine = StartCoroutine(StateLoop(currentState));
+  }
+
+  private void ChooseNextState()
+  {
+    if (currentState == BossState.Idle)
+    {
+      SwitchState(BossState.Chasing);
+    }
+    else if (currentState == BossState.Chasing)
+    {
+      int randomAttack = UnityEngine.Random.Range(0, 2);
+      if (enteredPhase2)
+      {
+        randomAttack = UnityEngine.Random.Range(0, 3);
+      }
+      if (randomAttack == 0)
+      {
+        SwitchState(BossState.Attack_Missile);
+      }
+      else if (randomAttack == 1)
+      {
+        SwitchState(BossState.Attack_Shockwave);
+      }
+      else if (randomAttack >= 2)
+      {
+        SwitchState(BossState.Attack_Frenzy);
+      }
+    }
+    else if (currentState == BossState.Attack_Missile)
+    {
+      SwitchState(BossState.Idle);
+    }
+    else if (currentState == BossState.Attack_Shockwave)
+    {
+      SwitchState(BossState.Idle);
+    }
+    else if (currentState == BossState.Attack_Frenzy)
+    {
+      SwitchState(BossState.Idle);
+    }
+  }
+
+  IEnumerator MissileAttack()
+  {
+    attackStarted = false;
+
+    animator.SetTrigger("Missile");
+
+    yield return new WaitUntil(() => attackStarted);
+
+    Vector2 direction = target.position - spriteTransform.position;
+    direction = direction.normalized;
+    spawnArc.bulletPrefab = homingBulletPrefab;
+
+    Vector3 spawnPosition = spriteTransform.position;
+    float spawnAngle = 90f;
+    if (facingLeft)
+    {
+      spawnPosition.x -= 1;
+      spawnAngle = -90f;
+    }
+    yield return spawnArc.Spawn(homingMissileCount, spawnAngle, spawnPosition, homingMissileCount * 20);
+    if (enteredPhase2)
+    {
+      for (int i = 0; i < missileSpawners.Length; i++)
+      {
+        yield return spawnArc.Spawn(3, spawnAngle, missileSpawners[i].position, 50);
+      }
+    }
+  }
+
+  IEnumerator ShockwaveAttack()
+  {
+    attackStarted = false;
+
+    animator.SetTrigger("Shockwave");
+
+    yield return new WaitUntil(() => attackStarted);
+
+    Vector2 direction = target.position - spriteTransform.position;
+    direction = direction.normalized;
+    spawnSimple.bulletPrefab = shockwaveBulletPrefab;
+
+    Vector3 spawnPosition = spriteTransform.position;
+    if (facingLeft)
+    {
+      spawnPosition.x -= 1;
+    }
+    yield return spawnSimple.Spawn(1, spawnPosition, direction, 0.3f);
+  }
+
+  IEnumerator FrenzyAttack()
+  {
+    attackStarted = false;
+
+    animator.SetTrigger("Frenzy");
+
+    yield return new WaitUntil(() => attackStarted);
+    for (int i = 0; i < 4; i++)
+    {
+      yield return spawnRing.Spawn(12, 2f, spriteTransform.position);
+      yield return new WaitForSeconds(0.3f);
+      yield return spawnRing.Spawn(12, 2f, spriteTransform.position, 360f / 12 / 3);
+      yield return new WaitForSeconds(0.3f);
+      yield return spawnRing.Spawn(12, 2f, spriteTransform.position, 360f / 6 / 3);
+      yield return new WaitForSeconds(0.3f);
+    }
+  }
+
+  IEnumerator Chase()
+  {
+    float chaseDuration = 2f;
+    float chaseTimer = 0f;
+
+    int randomTarget = UnityEngine.Random.Range(0, PlayerRegistry.Players.Count);
+    target = PlayerRegistry.Players[randomTarget];
+
+    animator.SetTrigger("Walk");
+    while (chaseTimer < chaseDuration)
+    {
+      chaseTimer += Time.fixedDeltaTime;
+
+      Vector3 targetPosition = target.position;
+      Vector3 direction = (targetPosition - transform.position).normalized;
+      rb.MovePosition((Vector3)rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+
+
+      if (direction.x <= 0)
+      {
+        spriteRenderer.flipX = true;
+        facingLeft = true;
+      }
+      else
+      {
+        spriteRenderer.flipX = false;
+        facingLeft = false;
+      }
+
+      yield return new WaitForFixedUpdate();
+    }
+
+    rb.velocity = Vector2.zero;
+  }
+
+  public void AnimEvent_AttackStart() => attackStarted = true;
+
+}

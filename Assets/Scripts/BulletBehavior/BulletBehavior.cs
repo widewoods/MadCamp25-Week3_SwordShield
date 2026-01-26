@@ -29,7 +29,7 @@ public class BulletBehavior : MonoBehaviour
   {
     rb = GetComponent<Rigidbody2D>();
     rb.velocity = initialDirection * speed;
-    Invoke(nameof(HandleBulletDestroy), 5f);
+    Invoke(nameof(HandleBulletDestroy), 10f);
   }
 
   protected virtual void HandleTrigger(Collider2D other)

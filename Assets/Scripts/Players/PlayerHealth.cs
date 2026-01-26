@@ -36,9 +36,13 @@ public class PlayerHealth : MonoBehaviour
       }
       return;
     }
-    if (!isInvincible && (collision.gameObject.CompareTag("Bullet") || collision.gameObject.CompareTag("Enemy")))
+    if (!isInvincible && collision.gameObject.CompareTag("Enemy"))
     {
-      Debug.Log("Hit!");
+      TakeDamage(1);
+    }
+    if (!isInvincible && collision.gameObject.CompareTag("Bullet"))
+    {
+      Destroy(collision.gameObject);
       TakeDamage(1);
     }
   }

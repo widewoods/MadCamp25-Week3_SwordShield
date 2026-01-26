@@ -386,7 +386,7 @@ MonoBehaviour:
   visualPivot: {fileID: 4308751903726296850}
   health: {fileID: 6016572112867645064}
   maxPullStrength: 40
-  stopDistance: 3
+  stopDistance: 2
   pullSlowdownFactor: 0.3
   accelerationTime: 1
   startUpDuration: 0.5
