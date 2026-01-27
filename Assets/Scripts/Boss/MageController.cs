@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MageController : MonoBehaviour
 {
-  private enum BossState { Idle, Chasing, Attack_Shockwave, Attack_Missile, Attack_Frenzy, Attack_Sword, Attack_Circle, Dead }
+  private enum BossState { Idle, Chasing, Attack_Shockwave, Attack_Missile, Attack_Frenzy, Attack_Sword, Attack_Circle, Stunned, Dead }
   private BossState currentState = BossState.Idle;
 
   [Header("References")]
@@ -18,6 +18,7 @@ public class MageController : MonoBehaviour
   [Header("Move")]
   [SerializeField] private float moveSpeed = 3f;
   [SerializeField] private float idleTime = 1f;
+  [SerializeField] private float stunDuration = 1f;
 
   [Header("Homing Attack")]
   [SerializeField] private SpawnArc spawnArc;
@@ -51,6 +52,7 @@ public class MageController : MonoBehaviour
     if (Input.GetKeyDown(KeyCode.Tab))
     {
       enteredPhase2 = true;
+      homingMissileCount *= 2;
     }
   }
 
@@ -60,6 +62,10 @@ public class MageController : MonoBehaviour
     {
       case BossState.Idle:
         yield return new WaitForSeconds(idleTime);
+        ChooseNextState();
+        break;
+      case BossState.Stunned:
+        yield return StunRoutine(stunDuration);
         ChooseNextState();
         break;
       case BossState.Chasing:
@@ -93,7 +99,11 @@ public class MageController : MonoBehaviour
 
   private void ChooseNextState()
   {
-    if (currentState == BossState.Idle)
+    if (currentState == BossState.Stunned)
+    {
+      SwitchState(BossState.Idle);
+    }
+    else if (currentState == BossState.Idle)
     {
       SwitchState(BossState.Chasing);
     }
@@ -155,7 +165,7 @@ public class MageController : MonoBehaviour
     {
       for (int i = 0; i < missileSpawners.Length; i++)
       {
-        yield return spawnArc.Spawn(3, spawnAngle, missileSpawners[i].position, 50);
+        yield return spawnArc.Spawn(3, spawnAngle, missileSpawners[i].position, 90);
       }
     }
   }
@@ -231,6 +241,24 @@ public class MageController : MonoBehaviour
     }
 
     rb.velocity = Vector2.zero;
+  }
+
+  public void Stun()
+  {
+    SwitchState(BossState.Stunned);
+  }
+
+  IEnumerator StunRoutine(float duration)
+  {
+    if (rb) rb.velocity = Vector2.zero;
+
+    if (spriteRenderer) spriteRenderer.color = new Color(0.3f, 0.3f, 1f, 1f);
+
+    animator.Play("Mage_Idle", 0, 0f);
+
+    yield return new WaitForSeconds(duration);
+
+    if (spriteRenderer) spriteRenderer.color = Color.white;
   }
 
   public void AnimEvent_AttackStart() => attackStarted = true;

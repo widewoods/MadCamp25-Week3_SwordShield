@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6120776225484655723}
   - component: {fileID: 8452443949802244963}
   - component: {fileID: 7135792712613176698}
-  - component: {fileID: 2612510805336118213}
   - component: {fileID: 2414614244299053085}
   - component: {fileID: 8060922406358376389}
+  - component: {fileID: 5312686363221350930}
   m_Layer: 6
   m_Name: Player_Shield
   m_TagString: Player
@@ -170,20 +170,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &2612510805336118213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3689514504282425531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04964101978f84bed8d7543730c3faee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 5
-  sword_hit: {fileID: 0}
 --- !u!114 &2414614244299053085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +182,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b112f45f0dc3c4905abc4a01d7d89890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  sword_hit: {fileID: 0}
+  iFrameDuration: 1.5
+  blinkInterval: 0.1
+  useLayerIgnore: 1
+  playerLayer: 6
+  enemyLayer: 7
+  sr: {fileID: 0}
+  hitFX: {fileID: 5312686363221350930}
+  parryDuration: 1
+  parryRadius: 1
+  parryCooldown: 1
 --- !u!114 &8060922406358376389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,3 +206,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4401df3b11c5497b8b3afb0f5f2b93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5312686363221350930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3689514504282425531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199164af7abb843a2a8413dc0f69d380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 0}
+  hitColor: {r: 0.7735849, g: 0.12771447, b: 0.12771447, a: 1}
+  peakIntensity: 0.1
+  inTime: 0.1
+  outTime: 0.2

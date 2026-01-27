@@ -9,14 +9,29 @@ public class PlayerHealth : MonoBehaviour
   private AudioSource audioSource;
   [SerializeField] private AudioClip sword_hit;
 
+  [Header("I-Frames")]
+  public float iFrameDuration = 0.8f;
+  public float blinkInterval = 0.08f;
+
+  public bool useLayerIgnore = false;
+  public int playerLayer = 6;
+  public int enemyLayer = 7;
+
+  private Coroutine iFrameCo;
+
+  [Header("Refs")]
+  [SerializeField] private SpriteRenderer sr;
+  [SerializeField] private HitVignetteFX hitFX;
+
   private bool isInvincible = false;
 
   void Start()
   {
     audioSource = GetComponent<AudioSource>();
+    if (!sr) sr = GetComponentInChildren<SpriteRenderer>();
   }
 
-  private void OnTriggerEnter2D(Collider2D collision)
+  protected virtual void HandleTrigger(Collider2D collision)
   {
     if (isInvincible && collision.gameObject.CompareTag("Enemy"))
     {
@@ -26,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
       audioSource.Play();
 
       EnemyHealth enemyHealth;
-      if (hit.TryGetComponent<EnemyHealth>(out enemyHealth))
+      if (hit.TryGetComponent(out enemyHealth))
       {
         enemyHealth.TakeDamage(1);
       }
@@ -36,15 +51,29 @@ public class PlayerHealth : MonoBehaviour
       }
       return;
     }
-    if (!isInvincible && collision.gameObject.CompareTag("Enemy"))
+    if (collision.gameObject.CompareTag("Enemy"))
     {
       TakeDamage(1);
     }
-    if (!isInvincible && collision.gameObject.CompareTag("Bullet"))
+    if (collision.gameObject.CompareTag("Bullet"))
     {
+      BulletBehavior bulletBehavior;
+      if (collision.gameObject.TryGetComponent(out bulletBehavior))
+      {
+        bulletBehavior.HandleTrigger(gameObject);
+      }
+      else
+      {
+        Debug.Log("Enemy health script not found");
+      }
       Destroy(collision.gameObject);
       TakeDamage(1);
     }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    HandleTrigger(collision);
   }
 
   public void SetInvincible(bool state)
@@ -54,10 +83,41 @@ public class PlayerHealth : MonoBehaviour
 
   public void TakeDamage(int damage)
   {
+    if (isInvincible) return;
     health -= damage;
     if (health <= 0)
     {
       Destroy(gameObject);
     }
+    if (hitFX) hitFX.Flash();
+    if (iFrameCo != null) StopCoroutine(iFrameCo);
+    iFrameCo = StartCoroutine(IFramesRoutine());
+  }
+
+  private IEnumerator IFramesRoutine()
+  {
+    isInvincible = true;
+
+    if (useLayerIgnore)
+      Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, true);
+
+    float t = 0f;
+    bool visible = true;
+
+    while (t < iFrameDuration)
+    {
+      t += blinkInterval;
+      visible = !visible;
+      if (sr) sr.enabled = visible;
+      yield return new WaitForSeconds(blinkInterval);
+    }
+
+    if (sr) sr.enabled = true;
+
+    if (useLayerIgnore)
+      Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+
+    isInvincible = false;
+    iFrameCo = null;
   }
 }
