@@ -6,8 +6,6 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
   [SerializeField] private int health = 1;
-  private AudioSource audioSource;
-  [SerializeField] private AudioClip sword_hit;
 
   [Header("I-Frames")]
   public float iFrameDuration = 0.8f;
@@ -28,7 +26,6 @@ public class PlayerHealth : MonoBehaviour
 
   void Start()
   {
-    audioSource = GetComponent<AudioSource>();
     if (!sr) sr = GetComponentInChildren<SpriteRenderer>();
   }
 
@@ -37,9 +34,6 @@ public class PlayerHealth : MonoBehaviour
     if (isAttacking && collision.gameObject.CompareTag("Enemy"))
     {
       GameObject hit = collision.gameObject;
-      audioSource.clip = sword_hit;
-      audioSource.time = 0.15f;
-      audioSource.Play();
 
       EnemyHealth enemyHealth;
       if (hit.TryGetComponent(out enemyHealth))

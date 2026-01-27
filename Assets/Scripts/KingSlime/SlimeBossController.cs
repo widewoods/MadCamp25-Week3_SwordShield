@@ -36,6 +36,8 @@ public class SlimeBossController : MonoBehaviour
   [SerializeField] private CircleCollider2D circleCollider;
   [SerializeField] private Transform physicsTransform;
 
+
+
   [Header("Scripts")]
   private SlimeAttack_JumpShot jumpShot;
   private SlimeAttack_BigJump bigJump;
