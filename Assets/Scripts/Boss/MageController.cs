@@ -248,6 +248,12 @@ public class MageController : MonoBehaviour
     SwitchState(BossState.Stunned);
   }
 
+  public void Die()
+  {
+    animator.SetTrigger("Dead");
+    SwitchState(BossState.Dead);
+  }
+
   IEnumerator StunRoutine(float duration)
   {
     if (rb) rb.velocity = Vector2.zero;
@@ -262,5 +268,5 @@ public class MageController : MonoBehaviour
   }
 
   public void AnimEvent_AttackStart() => attackStarted = true;
-
+  public void EnterPhase2() => enteredPhase2 = true;
 }

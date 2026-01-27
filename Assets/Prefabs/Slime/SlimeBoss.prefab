@@ -41,6 +41,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4448410259207495183}
+  - {fileID: 6160968498991351257}
+  - {fileID: 121177621653680390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6683832514868368573
@@ -110,7 +112,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 10
   m_Sprite: {fileID: -1515670112, guid: 5444b32eaab69447a83b0ba3543018b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -155,11 +157,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f639ad8354534ee484da76bdb85afff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  AttackDelayTime: 2
+  isInvincible: 0
+  AttackDelayTime: 3
   moveSpeed: 5
   rb: {fileID: 0}
   animator: {fileID: 0}
+  circleCollider: {fileID: 5816374390356085251}
+  physicsTransform: {fileID: 121177621653680390}
 --- !u!114 &7954147067810772684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRing: {fileID: 626650931195200994}
-  bulletPrefab: {fileID: 7803891544103851416, guid: 6529ddc9b0bc141ffa699803c85f5a58, type: 3}
+  physicsTransform: {fileID: 6160968498991351257}
   bulletCount: 16
   spreadLen: 2
 --- !u!114 &876528736380625476
@@ -191,6 +195,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   slimeEffectController: {fileID: 4594939312348806682}
+  slimeBossController: {fileID: 0}
   jumpHeight: 6
   jumpDuration: 0.6
   postLandDelay: 0.4
@@ -247,9 +252,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.052063324, y: -0.07101064}
+  m_Offset: {x: -0.052063268, y: -0.08351473}
   serializedVersion: 2
-  m_Radius: 0.20545149
+  m_Radius: 0.19294745
 --- !u!114 &4594939312348806682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be82d7fe185b41f6b30319bfbabb544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 2
   timeScale: 0.06
   durationRealtime: 0.4
   shakeDuration: 0.3
@@ -378,3 +383,65 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &5137645833738242405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 121177621653680390}
+  m_Layer: 7
+  m_Name: PhysicsTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &121177621653680390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137645833738242405}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.057, y: -0.258, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2146427844109309713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5198606506360903943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6160968498991351257}
+  m_Layer: 7
+  m_Name: CenterTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6160968498991351257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5198606506360903943}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07, y: -0.104, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2146427844109309713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

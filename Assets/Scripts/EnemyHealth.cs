@@ -12,15 +12,26 @@ public class EnemyHealth : MonoBehaviour
   [SerializeField] private float durationRealtime;
   [SerializeField] private float shakeDuration;
   [SerializeField] private float shakeMagnitude;
+
+  private SpriteRenderer spriteRenderer;
   // Start is called before the first frame update
   void Start()
   {
     currentHealth = maxHealth;
+    spriteRenderer = GetComponent<SpriteRenderer>();
+  }
+
+  IEnumerator Blink()
+  {
+    spriteRenderer.color = Color.red;
+    yield return new WaitForSeconds(0.1f);
+    spriteRenderer.color = Color.white;
   }
 
   public virtual void TakeDamage(int damage)
   {
     currentHealth -= damage;
+    StartCoroutine(Blink());
     HitStop.Instance.Do(timeScale, durationRealtime);
     FindObjectOfType<CameraShake>().Shake(shakeDuration, shakeMagnitude);
   }

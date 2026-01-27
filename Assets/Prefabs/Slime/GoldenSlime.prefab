@@ -161,7 +161,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 11
   m_Sprite: {fileID: -1458425494, guid: e74855f1482a948b4a7d4a134360076d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -311,3 +311,7 @@ MonoBehaviour:
   durationRealtime: 0.3
   shakeDuration: 0.2
   shakeMagnitude: 0.2
+  animator: {fileID: 6829159790063199436}
+  scripts:
+  - {fileID: -3837465125169402222}
+  - {fileID: 780710095383639390}
