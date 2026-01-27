@@ -23,6 +23,8 @@ public class SlimeBossController : MonoBehaviour
     }
   }
 
+  public bool isInvincible = false;
+
   [Header("Stats")]
   public float AttackDelayTime = 2f;
   [SerializeField] private float moveSpeed = 5f;

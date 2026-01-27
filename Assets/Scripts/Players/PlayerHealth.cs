@@ -84,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
 
   public void TakeDamage(int damage)
   {
-    if (isInvincible) return;
+    if (isInvincible || isAttacking) return;
     health -= damage;
     if (health <= 0)
     {

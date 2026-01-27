@@ -267,7 +267,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.1, y: 0.03, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4308751903726296850}
@@ -367,6 +367,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   sword_hit: {fileID: 8300000, guid: cd17f759a53f0433586a206616b5bef6, type: 3}
+  iFrameDuration: 0.8
+  blinkInterval: 0.08
+  useLayerIgnore: 0
+  playerLayer: 6
+  enemyLayer: 7
+  sr: {fileID: 0}
+  hitFX: {fileID: 0}
 --- !u!114 &1533615471816690734
 MonoBehaviour:
   m_ObjectHideFlags: 0

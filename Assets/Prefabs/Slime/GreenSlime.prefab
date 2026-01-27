@@ -96,9 +96,9 @@ GameObject:
   - component: {fileID: 8881285432329831505}
   - component: {fileID: 8744345642243028906}
   - component: {fileID: -7496647825613882261}
-  - component: {fileID: -5534401337738505728}
   - component: {fileID: 6140530641223017544}
   - component: {fileID: 3873391732465244654}
+  - component: {fileID: -3685313755058962403}
   m_Layer: 7
   m_Name: GreenSlime
   m_TagString: Enemy
@@ -211,7 +211,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 6
   m_Sprite: {fileID: -1181693553, guid: fb00f1cc6e07740bebc504cba2535793, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   animator: {fileID: 0}
   MoveSpeed: 2
-  attackCooldown: 4
+  attackCooldown: 2
   currentState: 0
 --- !u!114 &-7496647825613882261
 MonoBehaviour:
@@ -254,25 +254,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRing: {fileID: 6140530641223017544}
   physicsTransform: {fileID: 8945682356295674682}
-  bulletCount: 12
+  bulletCount: 8
   spreadLen: 2
---- !u!114 &-5534401337738505728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2362838094992181545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e141ce8bd9394e1cbac0ea46bc34efa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 1
-  timeScale: 0.06
-  durationRealtime: 0.4
-  shakeDuration: 0.3
-  shakeMagnitude: 0.2
 --- !u!114 &6140530641223017544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,6 +304,23 @@ CircleCollider2D:
   m_Offset: {x: 0.012150813, y: -0.007425491}
   serializedVersion: 2
   m_Radius: 0.08101971
+--- !u!114 &-3685313755058962403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362838094992181545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73c62c7738d74b0faaf83882a015111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  timeScale: 0.06
+  durationRealtime: 0.3
+  shakeDuration: 0.2
+  shakeMagnitude: 0.2
 --- !u!1 &4081546510932529720
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private Animator animator;
   [SerializeField] private SlimeEffectController slimeEffectController;
+  [SerializeField] private SlimeBossController slimeBossController;
 
   [Header("Jump")]
   [SerializeField] private float jumpHeight = 6f;
@@ -39,6 +40,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
   {
     if (rb == null) rb = GetComponent<Rigidbody2D>();
     if (animator == null) animator = GetComponentInChildren<Animator>();
+    slimeBossController = GetComponent<SlimeBossController>();
   }
 
   public Transform SelectTarget()
@@ -53,6 +55,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
 
   public void JumpTarget()
   {
+    slimeBossController.isInvincible = true;
     Target = SelectTarget();
     SetLayerRecursive(JumpLayerName);
     HideTarget();
@@ -97,6 +100,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
 
     RestoreColliders();
     isRunning = false;
+    slimeBossController.isInvincible = false;
   }
 
   private void CacheAndDisableColliders()

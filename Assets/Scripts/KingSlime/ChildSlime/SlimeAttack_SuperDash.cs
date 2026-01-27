@@ -7,6 +7,7 @@ public class SlimeAttack_SuperDash : MonoBehaviour
   [Header("Refs")]
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private Animator animator;
+  [SerializeField] private Collider2D myCol;
 
   [Header("Dash")]
   [SerializeField] private float dashSpeed = 8f;
@@ -60,15 +61,24 @@ public class SlimeAttack_SuperDash : MonoBehaviour
     OnFinished?.Invoke();
   }
 
-  private void OnCollisionEnter2D(Collision2D col)
+  void OnTriggerEnter2D(Collider2D col)
   {
     if (!isDashing) return;
-    if (((1 << col.gameObject.layer) & wallLayer) == 0) return;
+    if (((1 << col.gameObject.layer) & wallLayer.value) == 0) return;
 
-    Vector2 normal = col.GetContact(0).normal;
-    Direction = Vector2.Reflect(Direction, normal).normalized;
 
-    rb.velocity = Direction * dashSpeed;
+    ColliderDistance2D d = myCol.Distance(col);
+    Vector2 normal = d.normal;
+
+
+    if (normal.sqrMagnitude < 1e-6f) return;
+
+    int targetIndex = UnityEngine.Random.Range(0, PlayerRegistry.Players.Count);
+    Transform target = PlayerRegistry.Players[targetIndex];
+    Direction = transform.position - target.position;
+    Direction = Direction.normalized;
+
+    rb.velocity = -Direction * dashSpeed;
     ApplyRollFromVelocity(rb.velocity);
   }
 

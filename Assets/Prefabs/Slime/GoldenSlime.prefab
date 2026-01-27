@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: -3837465125169402222}
   - component: {fileID: -5312421287168515008}
   - component: {fileID: -824761336030608014}
-  - component: {fileID: 1878508651935012918}
+  - component: {fileID: -8110921432005858843}
   m_Layer: 7
   m_Name: GoldenSlime
   m_TagString: Enemy
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 6
   m_Sprite: {fileID: -1458425494, guid: e74855f1482a948b4a7d4a134360076d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -208,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   animator: {fileID: 0}
+  myCol: {fileID: -824761336030608014}
   dashSpeed: 8
   dashDuration: 120
   wallLayer:
@@ -287,13 +288,13 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.009816927}
   serializedVersion: 2
   m_Radius: 0.07066602
---- !u!114 &1878508651935012918
+--- !u!114 &-8110921432005858843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,11 +303,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1644492533154010256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e141ce8bd9394e1cbac0ea46bc34efa, type: 3}
+  m_Script: {fileID: 11500000, guid: f73c62c7738d74b0faaf83882a015111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
   timeScale: 0.06
-  durationRealtime: 0.4
-  shakeDuration: 0.3
+  durationRealtime: 0.3
+  shakeDuration: 0.2
   shakeMagnitude: 0.2
