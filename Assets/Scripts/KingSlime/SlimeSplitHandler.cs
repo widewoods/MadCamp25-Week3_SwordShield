@@ -3,43 +3,39 @@ using UnityEngine;
 
 public class SlimeSplitHandler : MonoBehaviour
 {
-    [Header("Split Settings")]
-    [SerializeField] private GameObject slimePrefab1;
-    [SerializeField] private GameObject slimePrefab2;
-    [SerializeField] private float spawnOffsetRadius = 1.5f;
+  [Header("Split Settings")]
+  [SerializeField] private GameObject slimePrefab1;
+  [SerializeField] private GameObject slimePrefab2;
+  [SerializeField] private float spawnOffsetRadius = 1.5f;
 
-    private SlimeBossController controller;
-    private GameObject[] slimePrefabs;
+  private SlimeBossController controller;
+  private GameObject[] slimePrefabs;
 
-    private void Awake()
+  private void Awake()
+  {
+    controller = GetComponent<SlimeBossController>();
+    slimePrefabs = new GameObject[] { slimePrefab1, slimePrefab2 };
+  }
+
+  /// 슬라임 분열 실행
+  public void SplitExecute()
+  {
+    if (slimePrefabs == null || controller == null)
     {
-        controller = GetComponent<SlimeBossController>();
-        slimePrefabs = new GameObject[] {slimePrefab1, slimePrefab2};
+      Destroy(gameObject);
+      return;
     }
 
-    /// <summary>
-    /// 슬라임 분열 실행
-    /// </summary>
-    public void SplitExecute()
+    for (int i = 0; i < 2; i++)
     {
-        if (slimePrefabs == null || controller == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
+      Vector2 offset = new Vector2((float)Math.Pow(-1, i) * spawnOffsetRadius, 0);
 
-        for (int i = 0; i < 2; i++)
-        {
-            Vector2 offset = new Vector2 ((float)Math.Pow(-1, i) * spawnOffsetRadius, 0);
-
-            GameObject child = Instantiate(
-                slimePrefabs[i],
-                offset,
-                Quaternion.identity
-            );
-        }
-
-        // 원본 슬라임 제거
-        Destroy(gameObject);
+      Instantiate(
+          slimePrefabs[i],
+          (Vector2)transform.position + offset,
+          Quaternion.identity
+      );
     }
+
+  }
 }

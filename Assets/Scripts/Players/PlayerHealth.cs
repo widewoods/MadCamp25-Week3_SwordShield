@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
   [SerializeField] private HitVignetteFX hitFX;
 
   private bool isInvincible = false;
+  private bool isAttacking = false;
 
   void Start()
   {
@@ -33,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
   protected virtual void HandleTrigger(Collider2D collision)
   {
-    if (isInvincible && collision.gameObject.CompareTag("Enemy"))
+    if (isAttacking && collision.gameObject.CompareTag("Enemy"))
     {
       GameObject hit = collision.gameObject;
       audioSource.clip = sword_hit;
@@ -76,9 +77,9 @@ public class PlayerHealth : MonoBehaviour
     HandleTrigger(collision);
   }
 
-  public void SetInvincible(bool state)
+  public void SetAttacking(bool state)
   {
-    isInvincible = state;
+    isAttacking = state;
   }
 
   public void TakeDamage(int damage)

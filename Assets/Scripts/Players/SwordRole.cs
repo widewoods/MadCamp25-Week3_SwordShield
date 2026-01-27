@@ -60,7 +60,7 @@ public class SwordRole : MonoBehaviour
   {
     if (currentState == PullState.Idle)
     {
-      health.SetInvincible(true);
+      health.SetAttacking(true);
       pullTimer = 0f;
       startUpTimer = 0f;
       currentState = PullState.StartUp;
@@ -85,7 +85,7 @@ public class SwordRole : MonoBehaviour
       currentState = PullState.Idle;
       swordPlayerController.SetExternalVelocity(Vector2.zero);
       slashTrail.EndTrail();
-      health.SetInvincible(false);
+      health.SetAttacking(false);
       return;
     }
 

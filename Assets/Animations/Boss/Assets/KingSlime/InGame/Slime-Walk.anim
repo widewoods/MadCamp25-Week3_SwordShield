@@ -65,7 +65,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -92,29 +92,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.41666666
     functionName: LandTarget
     data: 
     objectReferenceParameter: {fileID: 142910497060790646, guid: 6382009b1390c428cb93fb049c51a1a1, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.75
-    functionName: CameraShake
-    data: 
-    objectReferenceParameter: {fileID: 142910497060790646, guid: 6382009b1390c428cb93fb049c51a1a1, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.75
+  - time: 0.41666666
     functionName: OnAttackFinished
-    data: 
-    objectReferenceParameter: {fileID: 142910497060790646, guid: 6382009b1390c428cb93fb049c51a1a1, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.75
-    functionName: LandEffect
     data: 
     objectReferenceParameter: {fileID: 142910497060790646, guid: 6382009b1390c428cb93fb049c51a1a1, type: 3}
     floatParameter: 0
