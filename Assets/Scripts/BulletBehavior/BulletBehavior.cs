@@ -10,6 +10,7 @@ public class BulletBehavior : MonoBehaviour
   protected Vector2 initialDirection;
 
   [SerializeField] protected float speed;
+  public float Speed => speed;
 
   private void Start()
   {
@@ -20,19 +21,22 @@ public class BulletBehavior : MonoBehaviour
     Destroy(gameObject);
   }
 
-  private void OnTriggerEnter2D(Collider2D other)
-  {
-    HandleTrigger(other);
-  }
-
   protected virtual void OnStart()
   {
     rb = GetComponent<Rigidbody2D>();
     rb.velocity = initialDirection * speed;
-    Invoke(nameof(HandleBulletDestroy), 5f);
+    Invoke(nameof(HandleBulletDestroy), 10f);
   }
 
-  protected virtual void HandleTrigger(Collider2D other)
+  void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.gameObject.CompareTag("Wall"))
+    {
+      HandleBulletDestroy();
+    }
+  }
+
+  public virtual void HandleTrigger(GameObject other)
   {
     if (other.gameObject.CompareTag("Wall"))
     {

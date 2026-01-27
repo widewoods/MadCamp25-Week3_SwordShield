@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2514156554927798580}
   - component: {fileID: 729956194357222436}
   - component: {fileID: 5565079184399696242}
-  - component: {fileID: -6322026640433836403}
+  - component: {fileID: 1495509837481353459}
+  - component: {fileID: -7909606489911170827}
   m_Layer: 8
-  m_Name: SineBullet
+  m_Name: ShockwaveBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.3361152, y: 2.2026653, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4941788819416870695}
@@ -150,7 +151,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-6322026640433836403
+--- !u!114 &1495509837481353459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,12 +160,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 4083948310523586841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c368d95b02c540afb183481d3cf6cdc, type: 3}
+  m_Script: {fileID: 11500000, guid: f76cea44a52e74a8185fea6d7b8c77ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  frequency: 0.5
-  amplitude: 1.5
+  speed: 3
+  spawnRing: {fileID: -7909606489911170827}
+  burstBulletCount: 7
+  burstTime: 1
+--- !u!114 &-7909606489911170827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083948310523586841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a3cbedb8dd6431daaf52f9b4d67a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4083948310523586841, guid: 6bb66c12fd75d45e1a1e4af87075a4f6, type: 3}
 --- !u!1 &5855471068802904439
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,4 +24,9 @@ public class EnemyHealth : MonoBehaviour
     HitStop.Instance.Do(timeScale, durationRealtime);
     FindObjectOfType<CameraShake>().Shake(shakeDuration, shakeMagnitude);
   }
+
+  public virtual void Stunned()
+  {
+
+  }
 }
