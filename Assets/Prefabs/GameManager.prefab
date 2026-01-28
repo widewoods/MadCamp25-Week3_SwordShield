@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6724120427961301324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3414523236948499133}
+  - component: {fileID: 6653384870071443030}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3414523236948499133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6724120427961301324}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6098578, y: 1.126451, z: -0.05438208}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6653384870071443030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6724120427961301324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843d660973ee84ede852bab43aefcbe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorClearBaseScore: 10000
+  hpBonusMax: 2000
+  timePenaltyPerSecond: 10
+  survivalScorePerSecond: 100
+  uiSceneName: UIScene
+  firstFloorSceneName: FirstFloor-Slime
+  secondFloorSceneName: SecondFloor
+  thirdFloorSceneName: ThirdFloor
+  currentFloor: 0
+  clearedFloor: 0
+  totalScore: 0
+  isRunning: 0
+  runTime: 0
+  floorTime: 0
+  lastScore: 0
+  lastSurvivalSeconds: 0

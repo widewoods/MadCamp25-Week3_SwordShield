@@ -14,7 +14,8 @@ public class UIController : MonoBehaviour
         Cut,
         Rank,
         Register,
-        Loading
+        Loading,
+        Ending
     }
 
     public enum SceneState{
@@ -37,6 +38,7 @@ public class UIController : MonoBehaviour
     [SerializeField] public GameObject Cut;
     [SerializeField] public GameObject Rank;
     [SerializeField] public GameObject Register;
+    [SerializeField] public GameObject Ending;
  
     [Header("Refs")]
     [SerializeField] public ScoreController ScoreCon;
@@ -87,6 +89,9 @@ public class UIController : MonoBehaviour
         {
             ChangeUI(UIState.Loading);
         }
+        else if(scene.name == "Ending"){
+            ChangeUI(UIState.Ending);
+        }
     }
 
     void Awake()
@@ -113,6 +118,7 @@ public class UIController : MonoBehaviour
 
     // Manage UIState
     public void ChangeUIbyInt(int state){
+        Debug.Log($"Click Button to Change UI {(UIState)state}");
         ChangeUI((UIState)state);
     }
 
@@ -132,6 +138,7 @@ public class UIController : MonoBehaviour
         else if (state == UIState.Rank) Rank.SetActive(active);
         else if (state == UIState.Register) Register.SetActive(active);
         else if (state == UIState.Loading) {}
+        else if (state == UIState.Ending) Ending.SetActive(active);
         else Debug.LogError($"Invalid UI State: {state}");
     }
 
@@ -187,7 +194,7 @@ public class UIController : MonoBehaviour
             ChangeUI(UIState.Cut);
         }
         else if (floor == 3){
-            CallUIScene();
+            SceneManager.LoadScene("Ending");
         }
     }
 
@@ -203,7 +210,7 @@ public class UIController : MonoBehaviour
     }
     else
     {
-      
+      SceneManager.LoadScene("Ending");
     }
       
     }
