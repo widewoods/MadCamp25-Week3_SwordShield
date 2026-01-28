@@ -53,6 +53,7 @@ public class EnemyHealth : MonoBehaviour
 
   public void CallBossDeath()
   {
+    Debug.Log("Boss Dead");
     OnBossDeath?.Invoke();
   }
 }

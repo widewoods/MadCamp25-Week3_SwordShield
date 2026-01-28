@@ -42,6 +42,7 @@ public class UIController : MonoBehaviour
     [SerializeField] public TMP_Text Over_Title;
     [SerializeField] public TMP_Text NameField;
 
+    
     //Callback Functions
     private void OnEnable()
     {
@@ -53,7 +54,7 @@ public class UIController : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         EnemyHealth.OnBossDeath -= CallNextFloor;
-  }
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -63,7 +64,6 @@ public class UIController : MonoBehaviour
             ChangeUI(UIState.HUD);
             CSController.UpdateFloor(1);
             // CallNextFloor();
-
             // 필요하면 여기서 Player/Managers 재참조
             // player = FindObjectOfType<PlayerController>();
         }
@@ -92,7 +92,7 @@ public class UIController : MonoBehaviour
 
         GameObject gmObj = GameObject.Find("GameManager");
         ScoreCon = gmObj.GetComponent<ScoreController>();
-
+        
         SetActiveUI(UIState.Main, true);
         SetActiveUI(UIState.HUD, false);
         SetActiveUI(UIState.Exit, false);
