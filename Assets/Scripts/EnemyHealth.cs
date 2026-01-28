@@ -12,13 +12,17 @@ public class EnemyHealth : MonoBehaviour
   [SerializeField] private float durationRealtime;
   [SerializeField] private float shakeDuration;
   [SerializeField] private float shakeMagnitude;
-
+  [SerializeField] protected AudioClip hitSound;
+  [SerializeField] protected AudioClip deathSound;
+  protected AudioSource audioSource;
   private SpriteRenderer spriteRenderer;
-  // Start is called before the first frame update
-  void Start()
+
+
+  void Awake()
   {
     currentHealth = maxHealth;
     spriteRenderer = GetComponent<SpriteRenderer>();
+    audioSource = GetComponent<AudioSource>();
   }
 
   IEnumerator Blink()
@@ -31,6 +35,7 @@ public class EnemyHealth : MonoBehaviour
   public virtual void TakeDamage(int damage)
   {
     currentHealth -= damage;
+    audioSource.PlayOneShot(hitSound);
     StartCoroutine(Blink());
     HitStop.Instance.Do(timeScale, durationRealtime);
     FindObjectOfType<CameraShake>().Shake(shakeDuration, shakeMagnitude);
