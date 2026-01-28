@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04964101978f84bed8d7543730c3faee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 99
   iFrameDuration: 0.8
   blinkInterval: 0.08
   useLayerIgnore: 0
@@ -376,6 +376,7 @@ MonoBehaviour:
   enemyLayer: 7
   sr: {fileID: 7265760491394636481}
   hitFX: {fileID: 6341542052415190978}
+  hpui: {fileID: 0}
 --- !u!114 &1533615471816690734
 MonoBehaviour:
   m_ObjectHideFlags: 0

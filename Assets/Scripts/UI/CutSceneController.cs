@@ -15,9 +15,9 @@ public class CutSceneController : MonoBehaviour
     [SerializeField] public Sprite Magician;
 
     [Header("Cut_Titles")]
-    [SerializeField] public string textFloor1 = "Floor1\n- Slime King -";
-    [SerializeField] public string textFloor2 = "Floor2\n- Giant Golem -";
-    [SerializeField] public string textFloor3 = "Floor3\n- Lord of Sword & Shield -";
+    [SerializeField] public string textFloor1 = "Floor1 - Slime King";
+    [SerializeField] public string textFloor2 = "Floor2 - Giant Golem";
+    [SerializeField] public string textFloor3 = "Floor3 - Lord of Sword & Shield";
 
     [Header("Offsets")]
     [SerializeField] public Vector2 offset1 = new Vector2(50, 90);
@@ -31,8 +31,10 @@ public class CutSceneController : MonoBehaviour
     [SerializeField] public TMP_Text Cut_Title;
 
     public int currentFloor = 0;
+    public UIController UICon;
 
     void Awake(){
+        UICon = GetComponent<UIController>();
         UpdateFloor(floor);
     }
 
