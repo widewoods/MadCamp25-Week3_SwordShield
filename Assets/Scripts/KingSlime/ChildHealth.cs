@@ -12,6 +12,7 @@ public class ChildHealth : EnemyHealth
     base.TakeDamage(damage);
     if (currentHealth <= 0)
     {
+      audioSource.PlayOneShot(deathSound);
       animator.SetTrigger("Death");
       for (int i = 0; i < scripts.Length; i++)
       {
