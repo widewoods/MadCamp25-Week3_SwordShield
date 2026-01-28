@@ -1,0 +1,145 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class UIController : MonoBehaviour
+{
+    public enum UIState{
+        Main,
+        HUD,
+        Exit,
+        Over,
+        Cut
+    }
+
+    public enum SceneState{
+        UI,
+        Floor1,
+        Floor2,
+        Floor3
+    }
+
+    public UIState uistate;
+    public SceneState scstate;
+    public CutSceneController CSController;
+
+    [Header("UI Pages")]
+    [SerializeField] public GameObject Main;
+    [SerializeField] public GameObject HUD;
+    [SerializeField] public GameObject Exit;
+    [SerializeField] public GameObject Over;
+    [SerializeField] public GameObject Cut;
+
+    //Callback Functions
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "FirstFloor-Slime")
+        {
+            // FirstFloor에 맞게 UI 상태 전환
+            ChangeUI(UIState.HUD);
+            CSController.UpdateFloor(1);
+            CallNextFloor();
+
+            // 필요하면 여기서 Player/Managers 재참조
+            // player = FindObjectOfType<PlayerController>();
+        }
+        else if (scene.name == "SecondFloor"){
+            ChangeUI(UIState.HUD);
+            CSController.UpdateFloor(2);
+            CallNextFloor();
+        }
+        else if (scene.name == "ThirdFloor"){
+            ChangeUI(UIState.HUD);
+            CSController.UpdateFloor(3);
+        }
+        else if (scene.name == "UIScene")
+        {
+            ChangeUI(UIState.Main);
+        }
+    }
+
+    void Awake()
+    {
+        Time.timeScale = 1f;
+
+        uistate = UIState.Main;
+        scstate = SceneState.UI;
+        CSController = GetComponent<CutSceneController>();
+
+        SetActiveUI(UIState.Main, true);
+        SetActiveUI(UIState.HUD, false);
+        SetActiveUI(UIState.Exit, false);
+        SetActiveUI(UIState.Over, false);
+        SetActiveUI(UIState.Cut, false);
+    }
+
+
+
+
+    // Manage UIState
+    public void ChangeUIbyInt(int state){
+        ChangeUI((UIState)state);
+    }
+
+    public void ChangeUI(UIState state){
+        if(uistate == state) return;
+        SetActiveUI(uistate, false);
+        SetActiveUI(state, true);
+        uistate = state;
+    }
+
+    public void SetActiveUI(UIState state, bool active){
+        if (state == UIState.Main) Main.SetActive(active);
+        else if (state == UIState.HUD) HUD.SetActive(active);
+        else if (state == UIState.Exit) Exit.SetActive(active);
+        else if (state == UIState.Over) Over.SetActive(active);
+        else if (state == UIState.Cut) Cut.SetActive(active);
+        else Debug.LogError($"Invalid UI State: {state}");
+    }
+
+    // Call Scene Functions
+    public void CallFloorScene(){
+        int floor = CSController.currentFloor;
+        if (floor == 1) SceneManager.LoadScene("FirstFloor-Slime");
+        else if (floor == 2) SceneManager.LoadScene("SecondFloor");
+        else if (floor == 3) SceneManager.LoadScene("ThirdFloor");
+        else Debug.LogError($"Invalid floor number: {floor}");
+    }
+
+    public void GameOver(){
+        Time.timeScale = 0f;
+        ChangeUI(UIState.Over);
+    }
+
+    public void CallUIScene(){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("UIScene");
+    }
+
+    public void CallNextFloor(){
+        int floor = CSController.currentFloor;
+        if (floor == 1){
+            CSController.UpdateFloor(2);
+            ChangeUI(UIState.Cut);
+        }
+        else if (floor == 2){
+            CSController.UpdateFloor(3);
+            ChangeUI(UIState.Cut);
+        }
+        else if (floor == 3){
+            CallUIScene();
+        }
+    }
+    
+}

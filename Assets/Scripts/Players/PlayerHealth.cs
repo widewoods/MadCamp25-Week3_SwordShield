@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
   [Header("Refs")]
   [SerializeField] private SpriteRenderer sr;
   [SerializeField] private HitVignetteFX hitFX;
+  [SerializeField] private HeartHUD hpui;
 
   private bool isInvincible = false;
   private bool isAttacking = false;
@@ -85,6 +86,7 @@ public class PlayerHealth : MonoBehaviour
   public void TakeDamage(int damage)
   {
     if (isInvincible || isAttacking) return;
+    if (hpui != null) hpui.TakeHit();
     health -= damage;
     if (health <= 0)
     {
