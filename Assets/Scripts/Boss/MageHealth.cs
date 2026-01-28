@@ -15,6 +15,7 @@ public class MageHealth : EnemyHealth
       mageController.Die();
       Destroy(transform.GetChild(0).gameObject);
       GetComponent<BoxCollider2D>().enabled = false;
+      StartCoroutine(CallBossDeath(3));
     }
     if (currentHealth <= maxHealth / 2)
     {

@@ -297,6 +297,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &807861554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807861556}
+  - component: {fileID: 807861555}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &807861555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807861554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843d660973ee84ede852bab43aefcbe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorClearBaseScore: 10000
+  hpBonusMax: 2000
+  timePenaltyPerSecond: 10
+  survivalScorePerSecond: 100
+  uiSceneName: UIScene
+  firstFloorSceneName: FirstFloor-Slime
+  secondFloorSceneName: SecondFloor
+  thirdFloorSceneName: ThirdFloor
+  currentFloor: 0
+  clearedFloor: 0
+  totalScore: 0
+  isRunning: 0
+  runTime: 0
+  floorTime: 0
+  lastScore: 0
+  lastSurvivalSeconds: 0
+--- !u!4 &807861556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807861554}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4770051, y: 1.7736285, z: -0.022735143}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &881227617
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,7 +988,7 @@ MonoBehaviour:
   screenPaddingWorld: {x: 6, y: 4}
   cameraOffset: {x: 0, y: 0}
   zoomSmoothTime: 0.3
-  minOrthoSize: 9
+  minOrthoSize: 10
   maxOrthoSize: 15
   useLookAhead: 1
   lookAheadStrength: 0.2
@@ -1200,3 +1260,4 @@ SceneRoots:
   - {fileID: 3917293500389148345}
   - {fileID: 1227863083}
   - {fileID: 1586918667}
+  - {fileID: 807861556}

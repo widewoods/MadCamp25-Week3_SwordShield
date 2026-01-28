@@ -392,6 +392,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2414614244299053085, guid: 668835eb93e1e4e688ef62b8b082b876, type: 3}
+      propertyPath: hpui
+      value: 
+      objectReference: {fileID: 1328896931}
     - target: {fileID: 2439260988066865233, guid: 668835eb93e1e4e688ef62b8b082b876, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.85
@@ -544,6 +548,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05123abc9846a445f98722f4a6d979d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1360395458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1360395460}
+  - component: {fileID: 1360395459}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1360395459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360395458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843d660973ee84ede852bab43aefcbe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorClearBaseScore: 10000
+  hpBonusMax: 2000
+  timePenaltyPerSecond: 10
+  survivalScorePerSecond: 100
+  uiSceneName: UIScene
+  firstFloorSceneName: FirstFloor-Slime
+  secondFloorSceneName: SecondFloor
+  thirdFloorSceneName: ThirdFloor
+  currentFloor: 0
+  clearedFloor: 0
+  totalScore: 0
+  isRunning: 0
+  runTime: 0
+  floorTime: 0
+  lastScore: 0
+  lastSurvivalSeconds: 0
+--- !u!4 &1360395460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360395458}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6098578, y: 1.126451, z: -0.05438208}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1368327796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1310,11 +1374,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5716070263059128282, guid: c7f51c986882b4220a1a612838a36bec, type: 3}
       propertyPath: hp
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5716070263059128282, guid: c7f51c986882b4220a1a612838a36bec, type: 3}
       propertyPath: MaxHP
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5716070263059128282, guid: c7f51c986882b4220a1a612838a36bec, type: 3}
       propertyPath: uiController
@@ -1680,7 +1744,7 @@ MonoBehaviour:
   screenPaddingWorld: {x: 6, y: 4}
   cameraOffset: {x: 0, y: 0}
   zoomSmoothTime: 0.3
-  minOrthoSize: 7
+  minOrthoSize: 10
   maxOrthoSize: 15
   useLookAhead: 0
   lookAheadStrength: 0.2
@@ -1896,3 +1960,4 @@ SceneRoots:
   - {fileID: 2109761225}
   - {fileID: 162016184}
   - {fileID: 9214649413600165439}
+  - {fileID: 1360395460}

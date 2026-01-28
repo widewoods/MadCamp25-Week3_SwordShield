@@ -32,7 +32,7 @@ public class ChildHealth : EnemyHealth
       childCount--;
       if (childCount <= 0)
       {
-        CallBossDeath();
+        StartCoroutine(CallBossDeath(1));
       }
     }
   }
