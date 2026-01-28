@@ -30,17 +30,18 @@ public class CutSceneController : MonoBehaviour
     [SerializeField] public TMP_Text Over_Title;
     [SerializeField] public TMP_Text Cut_Title;
 
-    private int currentFloor = 0;
+    public int currentFloor = 0;
 
-    void Update(){
-        UpdateGameObjects(floor);
+    void Awake(){
+        UpdateFloor(floor);
     }
 
-    void UpdateGameObjects(int floor){
+    public void UpdateFloor(int input){
+        floor = input;
         if(currentFloor == floor) return;
+        Debug.Log($"Change Floor: {input}");
         currentFloor = floor;
         ChangeState(currentFloor);
-        
     }
 
     public void ChangeState(int floor){

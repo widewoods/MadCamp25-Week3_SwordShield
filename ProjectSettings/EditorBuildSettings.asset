@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/UIScene.unity
+    guid: ad11d862b480449cb89a7796d82438fa
+  - enabled: 1
     path: Assets/Scenes/FirstFloor-Slime.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/SecondFloor.unity
+    guid: 89b3a896c1a8d400dbbf713cc6a2fdce
+  - enabled: 1
+    path: Assets/Scenes/ThirdFloor.unity
+    guid: f2167f430ea8944329e2524accf1bc81
   m_configObjects: {}

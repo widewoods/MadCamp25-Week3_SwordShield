@@ -5,15 +5,16 @@ public class HeartHUD : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private int maxHearts = 3; // 하트 개수
-    [SerializeField] private int hp;            // 0 ~ maxHearts*2 (반칸 단위)
+    [SerializeField] private int MaxHP;         // 0 ~ maxHearts*2 (반칸 단위)
+    [SerializeField] private int hp;
 
     [Header("UI")]
     [SerializeField] private Image[] heartImages; // 크기 = maxHearts (왼쪽부터)
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite halfHeart;
     [SerializeField] private Sprite emptyHeart;
+    [SerializeField] private UIController uiController;
 
-    private int MaxHP => maxHearts * 2;
 
     private void Awake()
     {
@@ -43,6 +44,10 @@ public class HeartHUD : MonoBehaviour
     private void UpdateHearts()
     {
         // 각 하트에 남아있는 half-unit 계산
+        if(hp <= 0){
+            GameOver();
+            return;
+        }
         for (int i = 0; i < heartImages.Length; i++)
         {
             int heartValue = Mathf.Clamp(hp - (i * 2), 0, 2); // 0,1,2
@@ -51,5 +56,9 @@ public class HeartHUD : MonoBehaviour
             else if (heartValue == 1) heartImages[i].sprite = halfHeart;
             else heartImages[i].sprite = emptyHeart;
         }
+    }
+
+    private void GameOver(){
+        uiController.GameOver();
     }
 }
