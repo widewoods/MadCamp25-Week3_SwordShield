@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-  [SerializeField] private int health = 1;
-
   [Header("I-Frames")]
   public float iFrameDuration = 0.8f;
   public float blinkInterval = 0.08f;
 
-  public bool useLayerIgnore = false;
   public int playerLayer = 6;
   public int enemyLayer = 7;
 
@@ -47,11 +44,11 @@ public class PlayerHealth : MonoBehaviour
       }
       return;
     }
-    if (collision.gameObject.CompareTag("Enemy"))
+    else if (collision.gameObject.CompareTag("Enemy"))
     {
       TakeDamage(1);
     }
-    if (collision.gameObject.CompareTag("Bullet"))
+    else if (collision.gameObject.CompareTag("Bullet"))
     {
       BulletBehavior bulletBehavior;
       if (collision.gameObject.TryGetComponent(out bulletBehavior))
@@ -81,11 +78,6 @@ public class PlayerHealth : MonoBehaviour
   {
     if (isInvincible || isAttacking) return;
     if (hpui != null) hpui.TakeHit();
-    health -= damage;
-    if (health <= 0)
-    {
-      Destroy(gameObject);
-    }
     if (hitFX) hitFX.Flash();
     if (iFrameCo != null) StopCoroutine(iFrameCo);
     iFrameCo = StartCoroutine(IFramesRoutine());
@@ -94,9 +86,6 @@ public class PlayerHealth : MonoBehaviour
   private IEnumerator IFramesRoutine()
   {
     isInvincible = true;
-
-    if (useLayerIgnore)
-      Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, true);
 
     float t = 0f;
     bool visible = true;
@@ -110,9 +99,6 @@ public class PlayerHealth : MonoBehaviour
     }
 
     if (sr) sr.enabled = true;
-
-    if (useLayerIgnore)
-      Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
 
     isInvincible = false;
     iFrameCo = null;

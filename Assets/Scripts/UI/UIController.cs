@@ -46,12 +46,14 @@ public class UIController : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        EnemyHealth.OnBossDeath += CallNextFloor;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+        EnemyHealth.OnBossDeath -= CallNextFloor;
+  }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

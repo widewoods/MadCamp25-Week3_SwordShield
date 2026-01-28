@@ -11,6 +11,7 @@ public class MageController : MonoBehaviour
   [Header("References")]
   [SerializeField] private Animator animator;
   [SerializeField] private Transform spriteTransform;
+  [SerializeField] private Transform centerTransform;
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -113,6 +114,7 @@ public class MageController : MonoBehaviour
     stateCoroutine = StartCoroutine(StateLoop(currentState));
   }
 
+  int attackPattern = 0;
   private void ChooseNextState()
   {
     if (currentState == BossState.Stunned)
@@ -125,23 +127,25 @@ public class MageController : MonoBehaviour
     }
     else if (currentState == BossState.Chasing)
     {
-      int randomAttack = UnityEngine.Random.Range(0, 2);
+      int randomAttack = UnityEngine.Random.Range(0, 5);
       if (enteredPhase2)
       {
-        randomAttack = UnityEngine.Random.Range(0, 3);
+        attackPattern++;
       }
-      if (randomAttack == 0)
+      if (attackPattern == 1)
+      {
+        SwitchState(BossState.Attack_Frenzy);
+        attackPattern = 0;
+      }
+      else if (randomAttack <= 1)
       {
         SwitchState(BossState.Attack_Missile);
       }
-      else if (randomAttack == 1)
+      else if (randomAttack <= 4)
       {
         SwitchState(BossState.Attack_Shockwave);
       }
-      else if (randomAttack >= 2)
-      {
-        SwitchState(BossState.Attack_Frenzy);
-      }
+
     }
     else if (currentState == BossState.Attack_Missile)
     {
@@ -217,12 +221,15 @@ public class MageController : MonoBehaviour
     yield return new WaitUntil(() => attackStarted);
     for (int i = 0; i < 4; i++)
     {
-      yield return spawnRing.Spawn(12, 2f, spriteTransform.position);
-      yield return new WaitForSeconds(0.3f);
-      yield return spawnRing.Spawn(12, 2f, spriteTransform.position, 360f / 12 / 3);
-      yield return new WaitForSeconds(0.3f);
-      yield return spawnRing.Spawn(12, 2f, spriteTransform.position, 360f / 6 / 3);
-      yield return new WaitForSeconds(0.3f);
+      audioSource.PlayOneShot(frenzyFire);
+      yield return spawnRing.Spawn(10, 2f, centerTransform.position);
+      yield return new WaitForSeconds(0.2f);
+      audioSource.PlayOneShot(frenzyFire);
+      yield return spawnRing.Spawn(10, 2f, centerTransform.position, 360f / 10 / 3);
+      yield return new WaitForSeconds(0.2f);
+      audioSource.PlayOneShot(frenzyFire);
+      yield return spawnRing.Spawn(10, 2f, centerTransform.position, 360f / 10 / 3 * 2);
+      yield return new WaitForSeconds(0.2f);
     }
   }
 

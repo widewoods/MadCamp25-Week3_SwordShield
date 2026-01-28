@@ -22,24 +22,24 @@ public class ShieldRole : PlayerHealth
 
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.LeftShift))
-    {
-      if (parryReady)
-      {
-        StartParry();
-      }
-    }
-    parryTimer += Time.deltaTime;
-    if (parryTimer >= parryDuration)
-    {
-      isParrying = false;
-      collider.radius = baseColliderSize;
-    }
+    // if (Input.GetKeyDown(KeyCode.LeftShift))
+    // {
+    //   if (parryReady)
+    //   {
+    //     StartParry();
+    //   }
+    // }
+    // parryTimer += Time.deltaTime;
+    // if (parryTimer >= parryDuration)
+    // {
+    //   isParrying = false;
+    //   collider.radius = baseColliderSize;
+    // }
 
-    if (parryTimer >= parryCooldown)
-    {
-      parryReady = true;
-    }
+    // if (parryTimer >= parryCooldown)
+    // {
+    //   parryReady = true;
+    // }
   }
 
   private void StartParry()

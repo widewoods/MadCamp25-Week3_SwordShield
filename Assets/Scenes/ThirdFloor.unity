@@ -233,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 153421876}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.33, y: -2.65, z: 0}
+  m_LocalPosition: {x: 21.6, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -368,17 +368,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 513378209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &402094759 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2882906213457234219, guid: c7f51c986882b4220a1a612838a36bec, type: 3}
-  m_PrefabInstance: {fileID: 1216921501}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001f15f935faf4b4e85689a3726349a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &407381889
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +393,7 @@ Transform:
   m_GameObject: {fileID: 407381889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.36, y: -6.56, z: 0}
+  m_LocalPosition: {x: 21.8, y: -9.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -477,10 +466,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 513378211}
   spriteTransform: {fileID: 379109257}
+  centerTransform: {fileID: 2048981217}
   rb: {fileID: 513378214}
   spriteRenderer: {fileID: 513378212}
-  moveSpeed: 3
-  idleTime: 1
+  moveSpeed: 5
+  idleTime: 1.4
   stunDuration: 1
   spawnArc: {fileID: 513378210}
   homingBulletPrefab: {fileID: 4956062592349455384, guid: 8a8b543d96c9e41d79063f9c8564e1d9, type: 3}
@@ -499,7 +489,7 @@ MonoBehaviour:
   audioSource: {fileID: 513378217}
   burstSound: {fileID: 8300000, guid: ea9ac41ecae6e45d98a8301a9aa36aba, type: 3}
   magicMissileFire: {fileID: 8300000, guid: b5798bb02ab0f40e9bd42c8b63ea2ad6, type: 3}
-  frenzyFire: {fileID: 0}
+  frenzyFire: {fileID: 8300000, guid: ebecb5a3987694c1dad003490a8c63cc, type: 3}
   ShockwaveFire: {fileID: 8300000, guid: fde58d6e9701e41a49e600c8de18c41c, type: 3}
 --- !u!114 &513378206
 MonoBehaviour:
@@ -520,6 +510,7 @@ MonoBehaviour:
   shakeMagnitude: 0.3
   hitSound: {fileID: 8300000, guid: 6ede8cdb7c1234e74b160b2248f16972, type: 3}
   deathSound: {fileID: 8300000, guid: 1f207bd5169c745718e61052db04dc5f, type: 3}
+  audioSource: {fileID: 0}
   mageController: {fileID: 513378205}
   phaseTwoSound: {fileID: 8300000, guid: a037603d907454390803d00f1b60b168, type: 3}
 --- !u!4 &513378209
@@ -537,6 +528,7 @@ Transform:
   m_Children:
   - {fileID: 245126117}
   - {fileID: 379109257}
+  - {fileID: 2048981217}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &513378210
@@ -722,7 +714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a3cbedb8dd6431daaf52f9b4d67a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4083948310523586841, guid: f7e9c9b6d93714ecf8dd95e4a4ce5314, type: 3}
+  bulletPrefab: {fileID: 4083948310523586841, guid: 7ebfa67119a484ec09f15c05d5e4c4b6, type: 3}
+  spriteOffset: 45
 --- !u!82 &513378217
 AudioSource:
   m_ObjectHideFlags: 0
@@ -945,7 +938,7 @@ Transform:
   m_GameObject: {fileID: 1492437063}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.48, y: -3.55, z: 0}
+  m_LocalPosition: {x: -29.1, y: -4.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -976,7 +969,7 @@ Transform:
   m_GameObject: {fileID: 1555378971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.48, y: -7.6, z: 0}
+  m_LocalPosition: {x: -29.3, y: -10.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1123,7 +1116,7 @@ PrefabInstance:
     - target: {fileID: 6016572112867645064, guid: 6b696c3640df044b09a44cb4d27ffbf2, type: 3}
       propertyPath: hpui
       value: 
-      objectReference: {fileID: 2079613870}
+      objectReference: {fileID: 0}
     - target: {fileID: 6016572112867645064, guid: 6b696c3640df044b09a44cb4d27ffbf2, type: 3}
       propertyPath: hitFX
       value: 
@@ -1177,7 +1170,7 @@ Transform:
   m_GameObject: {fileID: 1820307564}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.4, y: 1.38, z: 0}
+  m_LocalPosition: {x: -28.62, y: 3.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1208,7 +1201,7 @@ Transform:
   m_GameObject: {fileID: 2012045223}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.39, y: 1.44, z: 0}
+  m_LocalPosition: {x: 21.6, y: 3.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1339,6 +1332,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d62c3cabc3ad422686edc2deefaf823, type: 3}
+--- !u!1 &2048981216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2048981217}
+  m_Layer: 7
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2048981217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048981216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.09, y: -1.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 513378209}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1465209427699041576
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1481,7 +1505,7 @@ MonoBehaviour:
   screenPaddingWorld: {x: 6, y: 4}
   cameraOffset: {x: 0, y: 0}
   zoomSmoothTime: 0.3
-  minOrthoSize: 7
+  minOrthoSize: 10
   maxOrthoSize: 15
   useLookAhead: 0
   lookAheadStrength: 0.2
