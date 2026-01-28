@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class UIController : MonoBehaviour
         Exit,
         Over,
         Cut,
-        Rank
+        Rank,
+        Register
     }
 
     public enum SceneState{
@@ -24,6 +26,7 @@ public class UIController : MonoBehaviour
     public UIState uistate;
     public SceneState scstate;
     public CutSceneController CSController;
+    public int finalScore;
 
     [Header("UI Pages")]
     [SerializeField] public GameObject Main;
@@ -32,6 +35,12 @@ public class UIController : MonoBehaviour
     [SerializeField] public GameObject Over;
     [SerializeField] public GameObject Cut;
     [SerializeField] public GameObject Rank;
+    [SerializeField] public GameObject Register;
+ 
+    [Header("Refs")]
+    [SerializeField] public ScoreController ScoreCon;
+    [SerializeField] public TMP_Text Over_Title;
+    [SerializeField] public TMP_Text NameField;
 
     //Callback Functions
     private void OnEnable()
@@ -81,6 +90,9 @@ public class UIController : MonoBehaviour
         scstate = SceneState.UI;
         CSController = GetComponent<CutSceneController>();
 
+        GameObject gmObj = GameObject.Find("GameManager");
+        ScoreCon = gmObj.GetComponent<ScoreController>();
+
         SetActiveUI(UIState.Main, true);
         SetActiveUI(UIState.HUD, false);
         SetActiveUI(UIState.Exit, false);
@@ -110,6 +122,7 @@ public class UIController : MonoBehaviour
         else if (state == UIState.Over) Over.SetActive(active);
         else if (state == UIState.Cut) Cut.SetActive(active);
         else if (state == UIState.Rank) Rank.SetActive(active);
+        else if (state == UIState.Register) Register.SetActive(active);
         else Debug.LogError($"Invalid UI State: {state}");
     }
 
@@ -123,14 +136,36 @@ public class UIController : MonoBehaviour
     }
 
     public void GameOver(){
+        finalScore = ScoreCon.FinalizeOnGameOver();
+        Over_Title.text += "\nScore: " + finalScore.ToString(); 
         Time.timeScale = 0f;
         ChangeUI(UIState.Over);
+    }
+
+    public void CallRegister(){
+        ChangeUI(UIState.Register);
+    }
+
+    public void RegistRank(){
+        // Data
+        string Name = NameField.text;
+        string Floor = "Floor" + CSController.currentFloor.ToString();
+        int Score = finalScore;
+
+
+        // Register
+        RankingRepository repo = new RankingRepository();
+        repo.Add(Name, Floor, Score);
+        
+        Debug.Log(Application.persistentDataPath);
+        Debug.Log($"Rank registered: {Name}, {Floor}F, {Score}");
     }
 
     public void CallUIScene(){
         Time.timeScale = 1f;
         SceneManager.LoadScene("UIScene");
     }
+
 
     public void CallNextFloor(){
         int floor = CSController.currentFloor;
@@ -146,5 +181,7 @@ public class UIController : MonoBehaviour
             CallUIScene();
         }
     }
+
+
     
 }
