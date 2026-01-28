@@ -37,7 +37,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13, y: -0.7419024, z: -0.011930413}
-  m_LocalScale: {x: 17, y: 17, z: 17}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4448410259207495183}
@@ -112,7 +112,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 10
   m_Sprite: {fileID: -1515670112, guid: 5444b32eaab69447a83b0ba3543018b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -159,12 +159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvincible: 0
   AttackDelayTime: 3
-  moveSpeed: 3
+  moveSpeed: 5
   rb: {fileID: 0}
   animator: {fileID: 0}
   circleCollider: {fileID: 5816374390356085251}
   physicsTransform: {fileID: 121177621653680390}
-  moveSound: {fileID: 0}
 --- !u!114 &7954147067810772684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRing: {fileID: 626650931195200994}
   physicsTransform: {fileID: 6160968498991351257}
-  FireSound: {fileID: 0}
   bulletCount: 16
   spreadLen: 2
 --- !u!114 &876528736380625476
@@ -198,8 +196,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   slimeEffectController: {fileID: 4594939312348806682}
   slimeBossController: {fileID: 0}
-  ImpactSound: {fileID: 0}
-  jumpSound: {fileID: 0}
   jumpHeight: 6
   jumpDuration: 0.6
   postLandDelay: 0.4
@@ -273,7 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LandEffectPrefab: {fileID: 2911150635222211621, guid: 76123e11256314742a9a40390fffa0ae, type: 3}
   currentEffect: {fileID: 0}
-  offset: {x: -0.5, y: -3.5}
+  offset: {x: -0.5, y: -2.5}
 --- !u!114 &1402296907188337154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,8 +287,6 @@ MonoBehaviour:
   durationRealtime: 0.4
   shakeDuration: 0.3
   shakeMagnitude: 0.2
-  hitSound: {fileID: 0}
-  deathSound: {fileID: 0}
   slimeBossController: {fileID: 5221933845286256475}
 --- !u!114 &626650931195200994
 MonoBehaviour:

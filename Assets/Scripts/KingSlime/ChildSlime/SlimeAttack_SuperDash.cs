@@ -61,7 +61,7 @@ public class SlimeAttack_SuperDash : MonoBehaviour
     OnFinished?.Invoke();
   }
 
-  void OnTriggerStay2D(Collider2D col)
+  void OnTriggerEnter2D(Collider2D col)
   {
     if (!isDashing) return;
     if (((1 << col.gameObject.layer) & wallLayer.value) == 0) return;
