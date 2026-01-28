@@ -17,7 +17,7 @@ public class EnemyHealth : MonoBehaviour
   [SerializeField] protected AudioClip deathSound;
   [SerializeField] protected AudioSource audioSource;
   private SpriteRenderer spriteRenderer;
-  public static Action OnBossDeath;
+  public static Action<int> OnBossDeath;
 
 
   void Awake()
@@ -51,9 +51,10 @@ public class EnemyHealth : MonoBehaviour
 
   }
 
-  public void CallBossDeath()
+  public IEnumerator CallBossDeath(int floor)
   {
-    Debug.Log("Boss Dead");
-    OnBossDeath?.Invoke();
+    yield return new WaitForSeconds(2f);
+    Debug.Log("Test");
+    OnBossDeath?.Invoke(floor);
   }
 }

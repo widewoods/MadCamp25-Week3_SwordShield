@@ -14,6 +14,7 @@ public class GolemHealth : EnemyHealth
     {
       audioSource.PlayOneShot(deathSound);
       golemController.Die();
+      StartCoroutine(CallBossDeath(2));
     }
     if (currentHealth <= maxHealth / 2)
     {

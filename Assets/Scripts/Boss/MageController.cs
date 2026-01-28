@@ -132,7 +132,7 @@ public class MageController : MonoBehaviour
       {
         attackPattern++;
       }
-      if (attackPattern == 1)
+      if (attackPattern == 5)
       {
         SwitchState(BossState.Attack_Frenzy);
         attackPattern = 0;

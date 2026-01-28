@@ -13,7 +13,8 @@ public class UIController : MonoBehaviour
         Over,
         Cut,
         Rank,
-        Register
+        Register,
+        Loading
     }
 
     public enum SceneState{
@@ -47,13 +48,15 @@ public class UIController : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        EnemyHealth.OnBossDeath += CallNextFloor;
+        EnemyHealth.OnBossDeath += CallLoadingScene;
+        InBetweenStageManager.OnReady += CallNextFloor;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        EnemyHealth.OnBossDeath -= CallNextFloor;
+        EnemyHealth.OnBossDeath -= CallLoadingScene;
+        InBetweenStageManager.OnReady -= CallNextFloor;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -80,6 +83,10 @@ public class UIController : MonoBehaviour
         {
             ChangeUI(UIState.Main);
         }
+        else if(scene.name == "Load1" || scene.name == "Load2")
+        {
+            ChangeUI(UIState.Loading);
+        }
     }
 
     void Awake()
@@ -89,6 +96,7 @@ public class UIController : MonoBehaviour
         uistate = UIState.Main;
         scstate = SceneState.UI;
         CSController = GetComponent<CutSceneController>();
+
 
         GameObject gmObj = GameObject.Find("GameManager");
         ScoreCon = gmObj.GetComponent<ScoreController>();
@@ -123,6 +131,7 @@ public class UIController : MonoBehaviour
         else if (state == UIState.Cut) Cut.SetActive(active);
         else if (state == UIState.Rank) Rank.SetActive(active);
         else if (state == UIState.Register) Register.SetActive(active);
+        else if (state == UIState.Loading) {}
         else Debug.LogError($"Invalid UI State: {state}");
     }
 
@@ -182,6 +191,21 @@ public class UIController : MonoBehaviour
         }
     }
 
-
+    public void CallLoadingScene(int floor)
+    {
+      if(floor == 1)
+    {
+      SceneManager.LoadScene("Load1");
+    }
+    else if(floor == 2)
+    {
+      SceneManager.LoadScene("Load2");
+    }
+    else
+    {
+      
+    }
+      
+    }
     
 }
