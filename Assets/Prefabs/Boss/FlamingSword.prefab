@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7070206902815407298}
   - component: {fileID: 2514156554927798580}
-  - component: {fileID: 729956194357222436}
+  - component: {fileID: 5963752346028505136}
   - component: {fileID: 5565079184399696242}
-  - component: {fileID: 4047260756723809897}
+  - component: {fileID: 7732766191835297677}
   m_Layer: 8
-  m_Name: HomingBullet
+  m_Name: FlamingSword
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,14 +28,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4083948310523586841}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 1.3361152, y: 2.2026653, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4941788819416870695}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!212 &2514156554927798580
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: 4f9865785298346249dd3ce046a63597, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cdf7a4609f2ace4e98a6f2c4bf014f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,8 +88,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &729956194357222436
-CircleCollider2D:
+--- !u!114 &5963752346028505136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083948310523586841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c713df3d475a4452a9912f1bf1735d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+--- !u!50 &5565079184399696242
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4083948310523586841}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &7732766191835297677
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -121,50 +161,37 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!50 &5565079184399696242
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083948310523586841}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &4047260756723809897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083948310523586841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ef7e401e6de4d05a3b24a86fd0ff17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  homingTime: 2
-  lockTime: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.013829887, y: -0.94145155}
+      - {x: 0.4375, y: -0.5625}
+      - {x: 0.8125, y: -0.1875}
+      - {x: 1.125, y: 0.25}
+      - {x: 2, y: 1.125}
+      - {x: 2, y: 2}
+      - {x: 1.125, y: 2}
+      - {x: -0.125, y: 0.8125}
+      - {x: -0.4375, y: 0.4375}
+      - {x: -0.4774319, y: 0.23575225}
+      - {x: -0.7212959, y: 0.0625}
+      - {x: -1.0701939, y: -0.25}
+      - {x: -1.3728155, y: -0.5}
+      - {x: -2, y: -1.0625}
+      - {x: -2, y: -2}
+      - {x: -1.125, y: -2}
+      - {x: -0.75, y: -1.625}
+      - {x: -0.54253393, y: -1.4535146}
+      - {x: -0.29055822, y: -1.2660145}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5855471068802904439
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,11 +237,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_LightType: 3
+  m_LightType: 1
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 0.3460751, g: 0.9528302, b: 0.8896638, a: 1}
-  m_Intensity: 7
+  m_FalloffIntensity: 0.748
+  m_Color: {r: 0.98039216, g: 0.7647059, b: 0.17254902, a: 1}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -231,8 +258,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: -0.00000011920929, z: 0}
-    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+    m_Center: {x: -0.015349984, y: 0.013199925, z: 0}
+    m_Extent: {x: 2.44985, y: 2.4232001, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -243,7 +270,7 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 0.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -1.965852, y: -1.9094728, z: 0}
+  - {x: 0.57568705, y: -0.57568705, z: 0}
+  - {x: 1.937664, y: 1.9376643, z: 0}
   - {x: -0.5, y: 0.5, z: 0}

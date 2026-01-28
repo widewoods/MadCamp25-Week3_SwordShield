@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class TowerHealth : EnemyHealth
 {
-  public static int towerCount = 0;
+  public static int towerCount = 4;
   public static event Action OnTowersBroken;
   [SerializeField] private GameObject particlePrefab;
   // Start is called before the first frame update
   void Start()
   {
-    towerCount++;
+    audioSource = FindObjectOfType<Camera>().gameObject.GetComponent<AudioSource>();
   }
 
 

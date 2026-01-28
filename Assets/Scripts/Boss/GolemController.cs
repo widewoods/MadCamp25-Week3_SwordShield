@@ -21,6 +21,7 @@ public class GolemController : MonoBehaviour
   [Header("Audio")]
   [SerializeField] private AudioClip strikeSound;
   [SerializeField] private AudioClip humSound;
+  [SerializeField] private AudioClip sineAttackSound;
   [SerializeField] private AudioSource audioSource;
 
 
@@ -32,6 +33,9 @@ public class GolemController : MonoBehaviour
   [SerializeField] private SpawnRing spawnRingAttack;
   [SerializeField] private SpawnMinion spawnMinion;
   [SerializeField] private SpawnSpiral spawnSpiral;
+
+
+  [SerializeField] private int ringCount;
 
   private Coroutine stateCoroutine;
   private bool protectionBroken = true;
@@ -171,19 +175,20 @@ public class GolemController : MonoBehaviour
   {
     animator.SetTrigger("Strike");
     yield return new WaitForSeconds(0.7f);
-    FindObjectOfType<CameraShake>().Shake(0.3f, 0.6f);
+    FindObjectOfType<CameraShake>().Shake(0.3f, 0.8f);
     audioSource.Stop();
     audioSource.clip = strikeSound;
     audioSource.Play();
-    yield return spawnRingAttack.Spawn(8, 2f, transform.position);
+    yield return spawnRingAttack.Spawn(ringCount * 2, 2f, transform.position);
     yield return new WaitForSeconds(0.5f);
-    yield return spawnRingAttack.Spawn(8, 1f, transform.position, 360f / 8 / 2);
+    yield return spawnRingAttack.Spawn(ringCount, 1f, transform.position, 360f / 8 / 2);
     animator.ResetTrigger("Strike");
   }
 
   IEnumerator BurstAttack()
   {
     animator.SetTrigger("Glow");
+    audioSource.PlayOneShot(sineAttackSound);
     yield return new WaitForSeconds(0.5f);
     yield return spawnSpiral.Spawn(18, 2f, transform.position);
     animator.ResetTrigger("Glow");
@@ -208,5 +213,7 @@ public class GolemController : MonoBehaviour
     currentState = BossState.Dead;
     OnBossDeath?.Invoke();
     gameObject.GetComponent<CircleCollider2D>().enabled = false;
+    Destroy(transform.GetChild(0).gameObject);
+    audioSource.Stop();
   }
 }

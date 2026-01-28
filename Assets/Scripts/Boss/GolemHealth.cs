@@ -12,6 +12,7 @@ public class GolemHealth : EnemyHealth
     base.TakeDamage(damage);
     if (currentHealth <= 0)
     {
+      audioSource.PlayOneShot(deathSound);
       golemController.Die();
     }
     if (currentHealth <= maxHealth / 2)

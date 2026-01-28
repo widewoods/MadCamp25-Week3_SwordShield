@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 23668595668218376}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalPosition: {x: 0, y: -0.64, z: 0}
   m_LocalScale: {x: 0.4347826, y: 0.4347826, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -199,7 +199,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.3, y: 5.45, z: 0}
-  m_LocalScale: {x: 2.3, y: 2.3, z: 0.46000004}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 0.24000002}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9221594452967026484}
@@ -247,7 +247,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: 97484863aa64e437d88deaae22d608ad, type: 3}
+  m_Sprite: {fileID: 1070975060, guid: 39d6f395756e42642a7a91298e35c1a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -335,9 +335,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.049085204}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.29908517
 --- !u!114 &2414614244299053085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,15 +350,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b112f45f0dc3c4905abc4a01d7d89890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  sword_hit: {fileID: 0}
   iFrameDuration: 1.5
   blinkInterval: 0.1
-  useLayerIgnore: 1
   playerLayer: 6
   enemyLayer: 7
   sr: {fileID: 0}
   hitFX: {fileID: 5312686363221350930}
+  hpui: {fileID: 0}
   parryDuration: 1
   parryRadius: 1
   parryCooldown: 1
@@ -389,5 +387,5 @@ MonoBehaviour:
   volume: {fileID: 0}
   hitColor: {r: 0.4245283, g: 0, b: 0, a: 1}
   peakIntensity: 0.15
-  inTime: 0.1
-  outTime: 0.2
+  inTime: 0.2
+  outTime: 0.25

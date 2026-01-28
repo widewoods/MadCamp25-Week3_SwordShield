@@ -13,6 +13,8 @@ public class SlimeHealth : EnemyHealth
     if (currentHealth <= 0)
     {
       slimeBossController.Die();
+      slimeBossController.StopAllCoroutines();
+      audioSource.PlayOneShot(deathSound);
     }
   }
 }

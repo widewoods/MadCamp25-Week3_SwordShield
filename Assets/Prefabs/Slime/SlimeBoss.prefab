@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4594939312348806682}
   - component: {fileID: 1402296907188337154}
   - component: {fileID: 626650931195200994}
+  - component: {fileID: 3669405407420777562}
   m_Layer: 7
   m_Name: SlimeBoss
   m_TagString: Enemy
@@ -37,7 +38,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13, y: -0.7419024, z: -0.011930413}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 15, y: 15, z: 15}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4448410259207495183}
@@ -112,7 +113,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 20
   m_Sprite: {fileID: -1515670112, guid: 5444b32eaab69447a83b0ba3543018b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -158,12 +159,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInvincible: 0
-  AttackDelayTime: 3
-  moveSpeed: 5
+  AttackDelayTime: 1.5
+  moveSpeed: 4
   rb: {fileID: 0}
   animator: {fileID: 0}
   circleCollider: {fileID: 5816374390356085251}
   physicsTransform: {fileID: 121177621653680390}
+  moveSound: {fileID: 8300000, guid: 678a8c9a1739b460aabd4143f5774908, type: 3}
 --- !u!114 &7954147067810772684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRing: {fileID: 626650931195200994}
   physicsTransform: {fileID: 6160968498991351257}
-  bulletCount: 16
+  FireSound: {fileID: 8300000, guid: 18806a0a724794f73890996896dea8dc, type: 3}
+  bulletCount: 24
   spreadLen: 2
 --- !u!114 &876528736380625476
 MonoBehaviour:
@@ -196,6 +199,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   slimeEffectController: {fileID: 4594939312348806682}
   slimeBossController: {fileID: 0}
+  ImpactSound: {fileID: 8300000, guid: 4b5ae7e7b82db4d0c8705d0774344138, type: 3}
+  jumpSound: {fileID: 8300000, guid: 9dc7a2c62482d4798ac9b17a66a2e3b6, type: 3}
   jumpHeight: 6
   jumpDuration: 0.6
   postLandDelay: 0.4
@@ -269,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LandEffectPrefab: {fileID: 2911150635222211621, guid: 76123e11256314742a9a40390fffa0ae, type: 3}
   currentEffect: {fileID: 0}
-  offset: {x: -0.5, y: -2.5}
+  offset: {x: -0.5, y: -3.5}
 --- !u!114 &1402296907188337154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,11 +287,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be82d7fe185b41f6b30319bfbabb544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 3
   timeScale: 0.06
   durationRealtime: 0.4
   shakeDuration: 0.3
   shakeMagnitude: 0.2
+  hitSound: {fileID: 8300000, guid: e09131b3d19b748bebb112e0b21af5a1, type: 3}
+  deathSound: {fileID: 8300000, guid: 02a388a83c99145cfa957f486756a926, type: 3}
   slimeBossController: {fileID: 5221933845286256475}
 --- !u!114 &626650931195200994
 MonoBehaviour:
@@ -301,6 +308,102 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7803891544103851416, guid: 6529ddc9b0bc141ffa699803c85f5a58, type: 3}
+--- !u!82 &3669405407420777562
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142910497060790646}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2756208152342884614
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +475,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 1.34
-  m_PointLightOuterRadius: 4.71
+  m_PointLightOuterRadius: 6.35
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

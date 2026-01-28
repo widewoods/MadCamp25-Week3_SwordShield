@@ -11,6 +11,7 @@ public class MageController : MonoBehaviour
   [Header("References")]
   [SerializeField] private Animator animator;
   [SerializeField] private Transform spriteTransform;
+  [SerializeField] private Transform centerTransform;
   [SerializeField] private Rigidbody2D rb;
   [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -34,6 +35,13 @@ public class MageController : MonoBehaviour
   [SerializeField] private SpawnRing spawnRing;
   [SerializeField] private GameObject frenzyBulletPrefab;
 
+  [Header("Audio")]
+  [SerializeField] private AudioSource audioSource;
+  [SerializeField] private AudioClip burstSound;
+  [SerializeField] private AudioClip magicMissileFire;
+  [SerializeField] private AudioClip frenzyFire;
+  [SerializeField] private AudioClip ShockwaveFire;
+
   private bool attackStarted;
 
   private bool enteredPhase2;
@@ -41,19 +49,28 @@ public class MageController : MonoBehaviour
   private Coroutine stateCoroutine;
   private Transform target;
 
+  private float soundTime = 0.3f;
+  private float soundTimer = 0f;
+
   void Start()
   {
     target = PlayerRegistry.Players[0];
     stateCoroutine = StartCoroutine(StateLoop(currentState));
   }
 
+  void OnEnable()
+  {
+    BurstBulletBehavior.OnBurst += PlaySoundOnBurst;
+  }
+
+  void OnDisable()
+  {
+    BurstBulletBehavior.OnBurst -= PlaySoundOnBurst;
+  }
+
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.Tab))
-    {
-      enteredPhase2 = true;
-      homingMissileCount *= 2;
-    }
+    soundTimer += Time.deltaTime;
   }
 
   IEnumerator StateLoop(BossState s)
@@ -97,6 +114,7 @@ public class MageController : MonoBehaviour
     stateCoroutine = StartCoroutine(StateLoop(currentState));
   }
 
+  int attackPattern = 0;
   private void ChooseNextState()
   {
     if (currentState == BossState.Stunned)
@@ -109,23 +127,25 @@ public class MageController : MonoBehaviour
     }
     else if (currentState == BossState.Chasing)
     {
-      int randomAttack = UnityEngine.Random.Range(0, 2);
+      int randomAttack = UnityEngine.Random.Range(0, 5);
       if (enteredPhase2)
       {
-        randomAttack = UnityEngine.Random.Range(0, 3);
+        attackPattern++;
       }
-      if (randomAttack == 0)
+      if (attackPattern == 1)
+      {
+        SwitchState(BossState.Attack_Frenzy);
+        attackPattern = 0;
+      }
+      else if (randomAttack <= 1)
       {
         SwitchState(BossState.Attack_Missile);
       }
-      else if (randomAttack == 1)
+      else if (randomAttack <= 4)
       {
         SwitchState(BossState.Attack_Shockwave);
       }
-      else if (randomAttack >= 2)
-      {
-        SwitchState(BossState.Attack_Frenzy);
-      }
+
     }
     else if (currentState == BossState.Attack_Missile)
     {
@@ -145,6 +165,7 @@ public class MageController : MonoBehaviour
   {
     attackStarted = false;
 
+    audioSource.PlayOneShot(magicMissileFire);
     animator.SetTrigger("Missile");
 
     yield return new WaitUntil(() => attackStarted);
@@ -174,6 +195,7 @@ public class MageController : MonoBehaviour
   {
     attackStarted = false;
 
+    audioSource.PlayOneShot(ShockwaveFire);
     animator.SetTrigger("Shockwave");
 
     yield return new WaitUntil(() => attackStarted);
@@ -199,12 +221,15 @@ public class MageController : MonoBehaviour
     yield return new WaitUntil(() => attackStarted);
     for (int i = 0; i < 4; i++)
     {
-      yield return spawnRing.Spawn(12, 2f, spriteTransform.position);
-      yield return new WaitForSeconds(0.3f);
-      yield return spawnRing.Spawn(12, 2f, spriteTransform.position, 360f / 12 / 3);
-      yield return new WaitForSeconds(0.3f);
-      yield return spawnRing.Spawn(12, 2f, spriteTransform.position, 360f / 6 / 3);
-      yield return new WaitForSeconds(0.3f);
+      audioSource.PlayOneShot(frenzyFire);
+      yield return spawnRing.Spawn(10, 2f, centerTransform.position);
+      yield return new WaitForSeconds(0.2f);
+      audioSource.PlayOneShot(frenzyFire);
+      yield return spawnRing.Spawn(10, 2f, centerTransform.position, 360f / 10 / 3);
+      yield return new WaitForSeconds(0.2f);
+      audioSource.PlayOneShot(frenzyFire);
+      yield return spawnRing.Spawn(10, 2f, centerTransform.position, 360f / 10 / 3 * 2);
+      yield return new WaitForSeconds(0.2f);
     }
   }
 
@@ -268,5 +293,18 @@ public class MageController : MonoBehaviour
   }
 
   public void AnimEvent_AttackStart() => attackStarted = true;
-  public void EnterPhase2() => enteredPhase2 = true;
+  public void EnterPhase2()
+  {
+    enteredPhase2 = true;
+    homingMissileCount *= 2;
+  }
+
+  private void PlaySoundOnBurst()
+  {
+    if (soundTimer >= soundTime)
+    {
+      audioSource.PlayOneShot(burstSound);
+      soundTimer = 0;
+    }
+  }
 }

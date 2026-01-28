@@ -12,6 +12,7 @@ public class CameraShake : MonoBehaviour
   {
     Debug.Log("Shake");
     if (co != null) StopCoroutine(co);
+    originalLocalPos = transform.localPosition;
     co = StartCoroutine(ShakeRoutine(duration, magnitude));
   }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 public class SpawnRing : MonoBehaviour
 {
   [SerializeField] private GameObject bulletPrefab;
+  [SerializeField] private float spriteOffset = 0f;
   // Start is called before the first frame update
   void Start()
   {
@@ -30,7 +31,7 @@ public class SpawnRing : MonoBehaviour
       Vector3 bulletMoveDirection = (bulletVector - centerPosition).normalized;
 
       float deg = Mathf.Atan2(bulletMoveDirection.y, bulletMoveDirection.x) * Mathf.Rad2Deg;
-      Quaternion rot = Quaternion.Euler(0f, 0f, deg - 90f);
+      Quaternion rot = Quaternion.Euler(0f, 0f, deg - 90f + spriteOffset);
       GameObject bullet = Instantiate(bulletPrefab, bulletVector, rot);
       BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
       bulletBehavior.SetInitialDirection(bulletMoveDirection);

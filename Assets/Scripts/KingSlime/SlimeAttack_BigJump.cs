@@ -10,6 +10,9 @@ public class SlimeAttack_BigJump : MonoBehaviour
   [SerializeField] private Animator animator;
   [SerializeField] private SlimeEffectController slimeEffectController;
   [SerializeField] private SlimeBossController slimeBossController;
+  private AudioSource audioSource;
+  [SerializeField] private AudioClip ImpactSound;
+  [SerializeField] private AudioClip jumpSound;
 
   [Header("Jump")]
   [SerializeField] private float jumpHeight = 6f;
@@ -41,6 +44,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
     if (rb == null) rb = GetComponent<Rigidbody2D>();
     if (animator == null) animator = GetComponentInChildren<Animator>();
     slimeBossController = GetComponent<SlimeBossController>();
+    audioSource = GetComponent<AudioSource>();
   }
 
   public Transform SelectTarget()
@@ -55,6 +59,7 @@ public class SlimeAttack_BigJump : MonoBehaviour
 
   public void JumpTarget()
   {
+    audioSource.PlayOneShot(jumpSound);
     slimeBossController.isInvincible = true;
     Target = SelectTarget();
     SetLayerRecursive(JumpLayerName);
@@ -97,6 +102,11 @@ public class SlimeAttack_BigJump : MonoBehaviour
     }
     CameraShake();
     slimeEffectController.LandEffect();
+
+    audioSource.Stop();
+    audioSource.time = 0.3f;
+    audioSource.clip = ImpactSound;
+    audioSource.Play();
 
     RestoreColliders();
     isRunning = false;
