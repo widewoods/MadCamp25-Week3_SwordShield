@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SlimeBossController : MonoBehaviour
 {
+
   public enum BossState
   {
     Idle,
@@ -35,6 +36,8 @@ public class SlimeBossController : MonoBehaviour
   public Animator animator;
   [SerializeField] private CircleCollider2D circleCollider;
   [SerializeField] private Transform physicsTransform;
+  private AudioSource audioSource;
+  [SerializeField] private AudioClip moveSound;
 
 
 
@@ -51,7 +54,7 @@ public class SlimeBossController : MonoBehaviour
     // Reference 
     rb = GetComponent<Rigidbody2D>();
     animator = GetComponent<Animator>();
-
+    audioSource = GetComponent<AudioSource>();
     // Scripts
     jumpShot = GetComponent<SlimeAttack_JumpShot>();
     bigJump = GetComponent<SlimeAttack_BigJump>();
@@ -72,12 +75,20 @@ public class SlimeBossController : MonoBehaviour
     isBusy = busy;
   }
 
+  int attackPattern = 0;
   // In-State Logic
   void StartNextAttack()
   {
-    float r = Random.value;
-    if (r < .6f) StartJumpShot();
-    else StartBigJump();
+    if (attackPattern % 3 != 0)
+    {
+      StartJumpShot();
+
+    }
+    else
+    {
+      StartBigJump();
+    }
+    attackPattern++;
   }
 
   void StartJumpShot()
@@ -119,12 +130,16 @@ public class SlimeBossController : MonoBehaviour
     animator.SetTrigger("Idle");
     Transform target = PlayerRegistry.Players[0];
     float t = 0f;
+
+    audioSource.clip = moveSound;
+    audioSource.Play();
     while (t < AttackDelayTime)
     {
       Vector2 direction = (Vector2)target.transform.position - (Vector2)physicsTransform.position;
       direction = direction.normalized;
       rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime * (Mathf.Sin(t * Mathf.PI * 2) + 1));
       t += Time.fixedDeltaTime;
+
       yield return new WaitForFixedUpdate();
     }
 

@@ -14,7 +14,7 @@ public class MageHealth : EnemyHealth
       audioSource.PlayOneShot(deathSound);
       mageController.Die();
       Destroy(transform.GetChild(0).gameObject);
-      GetComponent<CircleCollider2D>().enabled = false;
+      GetComponent<BoxCollider2D>().enabled = false;
     }
     if (currentHealth <= maxHealth / 2)
     {

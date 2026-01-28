@@ -163,12 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76cea44a52e74a8185fea6d7b8c77ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
   spawnRing: {fileID: -7909606489911170827}
   burstBulletCount: 7
   burstTime: 1
-  audioSource: {fileID: 0}
-  explodeSound: {fileID: 8300000, guid: ea9ac41ecae6e45d98a8301a9aa36aba, type: 3}
 --- !u!114 &-7909606489911170827
 MonoBehaviour:
   m_ObjectHideFlags: 0
