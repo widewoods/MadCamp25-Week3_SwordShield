@@ -49,7 +49,7 @@ public class UIController : MonoBehaviour
             // FirstFloor에 맞게 UI 상태 전환
             ChangeUI(UIState.HUD);
             CSController.UpdateFloor(1);
-            CallNextFloor();
+            // CallNextFloor();
 
             // 필요하면 여기서 Player/Managers 재참조
             // player = FindObjectOfType<PlayerController>();
@@ -57,7 +57,7 @@ public class UIController : MonoBehaviour
         else if (scene.name == "SecondFloor"){
             ChangeUI(UIState.HUD);
             CSController.UpdateFloor(2);
-            CallNextFloor();
+            // CallNextFloor();
         }
         else if (scene.name == "ThirdFloor"){
             ChangeUI(UIState.HUD);
