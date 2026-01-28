@@ -335,9 +335,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.049085204}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.29908517
 --- !u!114 &2414614244299053085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,14 +350,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b112f45f0dc3c4905abc4a01d7d89890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
   iFrameDuration: 1.5
   blinkInterval: 0.1
-  useLayerIgnore: 1
   playerLayer: 6
   enemyLayer: 7
   sr: {fileID: 0}
   hitFX: {fileID: 5312686363221350930}
+  hpui: {fileID: 0}
   parryDuration: 1
   parryRadius: 1
   parryCooldown: 1
@@ -388,5 +387,5 @@ MonoBehaviour:
   volume: {fileID: 0}
   hitColor: {r: 0.4245283, g: 0, b: 0, a: 1}
   peakIntensity: 0.15
-  inTime: 0.1
-  outTime: 0.2
+  inTime: 0.2
+  outTime: 0.25

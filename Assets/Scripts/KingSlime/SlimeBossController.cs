@@ -128,7 +128,8 @@ public class SlimeBossController : MonoBehaviour
   {
     ChangeState(BossState.Idle, true);
     animator.SetTrigger("Idle");
-    Transform target = PlayerRegistry.Players[0];
+    int targetIndex = UnityEngine.Random.Range(0, PlayerRegistry.Players.Count);
+    Transform target = PlayerRegistry.Players[targetIndex];
     float t = 0f;
 
     audioSource.clip = moveSound;

@@ -8,8 +8,8 @@ public class MinionController : MonoBehaviour
   [SerializeField] private SpawnRing spawnRing;
   [SerializeField] private GolemController golemController;
 
-  
-  private float shootInterval = 2f;
+
+  [SerializeField] private float shootInterval = 1f;
   private float shootTimer = 0f;
 
   void Start()

@@ -353,8 +353,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.011338616, y: -0.17549789}
-  m_Size: {x: 0.17253189, y: 0.42970777}
+  m_Offset: {x: -0.011338615, y: -0.13186638}
+  m_Size: {x: 0.17253189, y: 0.9423792}
   m_Direction: 0
 --- !u!114 &6016572112867645064
 MonoBehaviour:
@@ -368,14 +368,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04964101978f84bed8d7543730c3faee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
   iFrameDuration: 0.8
   blinkInterval: 0.08
-  useLayerIgnore: 0
   playerLayer: 6
   enemyLayer: 7
   sr: {fileID: 7265760491394636481}
   hitFX: {fileID: 6341542052415190978}
+  hpui: {fileID: 0}
 --- !u!114 &1533615471816690734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,8 +545,8 @@ MonoBehaviour:
   volume: {fileID: 0}
   hitColor: {r: 0.4245283, g: 0, b: 0, a: 1}
   peakIntensity: 0.15
-  inTime: 0.1
-  outTime: 0.2
+  inTime: 0.2
+  outTime: 0.25
 --- !u!1 &4490531952882745551
 GameObject:
   m_ObjectHideFlags: 0

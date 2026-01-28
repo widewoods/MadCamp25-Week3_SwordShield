@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,15 +15,19 @@ public class EnemyHealth : MonoBehaviour
   [SerializeField] private float shakeMagnitude;
   [SerializeField] protected AudioClip hitSound;
   [SerializeField] protected AudioClip deathSound;
-  protected AudioSource audioSource;
+  [SerializeField] protected AudioSource audioSource;
   private SpriteRenderer spriteRenderer;
+  public static Action OnBossDeath;
 
 
   void Awake()
   {
     currentHealth = maxHealth;
     spriteRenderer = GetComponent<SpriteRenderer>();
-    audioSource = GetComponent<AudioSource>();
+    if (audioSource == null)
+    {
+      audioSource = GetComponent<AudioSource>();
+    }
   }
 
   IEnumerator Blink()
@@ -44,5 +49,10 @@ public class EnemyHealth : MonoBehaviour
   public virtual void Stunned()
   {
 
+  }
+
+  public void CallBossDeath()
+  {
+    OnBossDeath?.Invoke();
   }
 }

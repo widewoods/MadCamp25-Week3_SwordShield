@@ -98,7 +98,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -656,7 +656,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -862,7 +862,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -884,7 +884,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -908,7 +908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -987,7 +987,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -8023,7 +8023,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -8045,7 +8045,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -8069,7 +8069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
@@ -10839,7 +10839,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.518708, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.3
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000fb480eeae9afda2dfdab5d9b5bf711a4696bc4c48d9ca10dcd8616c4ed6d257d
@@ -10861,7 +10861,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.81
-  m_PointLightOuterRadius: 5.27
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -10885,7 +10885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 0}
-  baseIntensity: 1
+  baseIntensity: 1.3
   intensityAmp: 0.55
   speed: 3
   noiseSpeed: 1.7
