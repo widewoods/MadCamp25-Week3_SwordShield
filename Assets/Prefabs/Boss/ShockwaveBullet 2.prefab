@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: a31332703402e4250ae8c49ebf623c23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f9865785298346249dd3ce046a63597, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76cea44a52e74a8185fea6d7b8c77ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 5
   spawnRing: {fileID: -7909606489911170827}
   burstBulletCount: 9
   burstTime: 1
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a3cbedb8dd6431daaf52f9b4d67a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4083948310523586841, guid: f7e9c9b6d93714ecf8dd95e4a4ce5314, type: 3}
+  bulletPrefab: {fileID: 4083948310523586841, guid: 5d2a65bc7b5c547738d5c8dd56e5ba18, type: 3}
 --- !u!1 &5855471068802904439
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.79607844, g: 0.28627452, b: 0.105882354, a: 1}
+  m_Color: {r: 0.3460751, g: 0.9528302, b: 0.8896638, a: 1}
   m_Intensity: 7
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 0.98
+  m_PointLightOuterRadius: 0.55
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

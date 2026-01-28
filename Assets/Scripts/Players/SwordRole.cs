@@ -38,7 +38,7 @@ public class SwordRole : MonoBehaviour
 
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.RightShift))
+    if (Input.GetKeyDown(KeyCode.RightAlt))
     {
       StartPull();
     }

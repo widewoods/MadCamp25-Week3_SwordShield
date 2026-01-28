@@ -34,13 +34,6 @@ public class MageController : MonoBehaviour
   [SerializeField] private SpawnRing spawnRing;
   [SerializeField] private GameObject frenzyBulletPrefab;
 
-  [Header("Audio")]
-  [SerializeField] private AudioSource audioSource;
-  [SerializeField] private AudioClip burstSound;
-  [SerializeField] private AudioClip magicMissileFire;
-  [SerializeField] private AudioClip frenzyFire;
-  [SerializeField] private AudioClip ShockwaveFire;
-
   private bool attackStarted;
 
   private bool enteredPhase2;
@@ -48,28 +41,19 @@ public class MageController : MonoBehaviour
   private Coroutine stateCoroutine;
   private Transform target;
 
-  private float soundTime = 0.3f;
-  private float soundTimer = 0f;
-
   void Start()
   {
     target = PlayerRegistry.Players[0];
     stateCoroutine = StartCoroutine(StateLoop(currentState));
   }
 
-  void OnEnable()
-  {
-    BurstBulletBehavior.OnBurst += PlaySoundOnBurst;
-  }
-
-  void OnDisable()
-  {
-    BurstBulletBehavior.OnBurst -= PlaySoundOnBurst;
-  }
-
   void Update()
   {
-    soundTimer += Time.deltaTime;
+    if (Input.GetKeyDown(KeyCode.Tab))
+    {
+      enteredPhase2 = true;
+      homingMissileCount *= 2;
+    }
   }
 
   IEnumerator StateLoop(BossState s)
@@ -161,7 +145,6 @@ public class MageController : MonoBehaviour
   {
     attackStarted = false;
 
-    audioSource.PlayOneShot(magicMissileFire);
     animator.SetTrigger("Missile");
 
     yield return new WaitUntil(() => attackStarted);
@@ -191,7 +174,6 @@ public class MageController : MonoBehaviour
   {
     attackStarted = false;
 
-    audioSource.PlayOneShot(ShockwaveFire);
     animator.SetTrigger("Shockwave");
 
     yield return new WaitUntil(() => attackStarted);
@@ -286,18 +268,5 @@ public class MageController : MonoBehaviour
   }
 
   public void AnimEvent_AttackStart() => attackStarted = true;
-  public void EnterPhase2()
-  {
-    enteredPhase2 = true;
-    homingMissileCount *= 2;
-  }
-
-  private void PlaySoundOnBurst()
-  {
-    if (soundTimer >= soundTime)
-    {
-      audioSource.PlayOneShot(burstSound);
-      soundTimer = 0;
-    }
-  }
+  public void EnterPhase2() => enteredPhase2 = true;
 }
